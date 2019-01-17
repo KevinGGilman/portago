@@ -1,5 +1,5 @@
 # portago
-A ECommerce website selling straw
+An ECommerce website for selling straw kit
 
 
 
