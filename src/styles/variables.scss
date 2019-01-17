@@ -1,0 +1,141 @@
+$white-t2: hsla(0,0%,100%, 0.97);
+$white80: hsla(0,0%,100%, 0.8);
+$white70: hsla(0,0%,100%, 0.7);
+$white60: hsla(0,0%,100%, 0.6);
+$white40: hsla(0,0%,100%, 0.4);
+// gray
+$gray98: hsl(0,0%,98%);
+$gray95: hsl(0,0%,95%);
+$gray90: hsl(0,0%,90%);
+$gray85: hsl(0,0%,85%);
+$gray80: hsl(0,0%,80%);
+$gray70: hsl(0,0%,70%);
+$gray60: hsl(0,0%,60%);
+$gray50: hsl(0,0%,50%);
+$gray30: hsl(0,0%,30%);
+$gray25: hsl(0,0%,27%);
+$gray20: hsl(0,0%,20%);
+$gray15: hsl(0,0%,15%);
+// transparent
+$gray-t30: hsla(0,0%,30%,0.97);
+$gray-t20: hsla(0,0%,20%,0.97);
+$gray-t15: hsla(0,0%,15%,0.97);
+$gray-t40: hsla(0,0%,40%,0.8);
+$gray-t20: hsla(0,0%,20%,0.97);
+$gray-t85: hsla(0,0%,95%,0.90);
+$gray-t98: hsla(0,0%,98%,0.90);
+$black-t4: hsla(0,0%,0%,0.4);
+// primary
+$primary: hsl(212, 85%, 55%);
+$primary95: hsl(212, 85%, 98%);
+$primary95: hsl(212, 85%, 95%);
+$primary90: hsl(212, 85%, 90%);
+$primary80: hsl(212, 85%, 80%);
+$primary70: hsl(212, 85%, 70%);
+$primary60: hsl(212, 85%, 60%);
+$primary40: hsl(212, 100%, 40%);
+$primary30: hsl(212, 100%, 30%);
+// secondary
+$secondary: hsl(23, 85%, 55%);
+$secondary95: hsl(23, 85%, 95%);
+$secondary90: hsl(23, 85%, 90%);
+$secondary80: hsl(23, 85%, 80%);
+$secondary70: hsl(23, 85%, 70%);
+$secondary60: hsl(23, 85%, 60%);
+$secondary40: hsl(23, 100%, 40%);
+$secondary30: hsl(23, 100%, 30%);
+$error: hsl(0, 85%, 60%);
+$error95: hsl(0, 80%, 95%);
+$error80: hsl(0, 80%, 80%);
+$error30: hsl(0, 80%, 30%);
+$smiley: hsl(50, 90%, 50%);
+$smiley60: hsl(50, 80%, 60%);
+$smiley70: hsl(50, 80%, 70%);
+$smiley30: hsl(50, 80%, 30%);
+
+$facebook: #3b5998;
+$linkedin: #0077b5;
+$youtube: #cc181e;
+$email: #f2a60c;
+
+@mixin transition{
+  transition: all 0.1s ease-in-out;
+}
+@mixin center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin vertical{
+  display: flex;
+  flex-direction: column;
+}
+@mixin shadow{
+  box-shadow: 0 0 3px $gray50;
+}
+
+@mixin no-select {
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+cursor: pointer;
+}
+
+@mixin dropdown{
+  @include shadow;
+  position: absolute;
+  color: gray;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  overflow: hidden;
+  background: #f2f2f2;
+  span{
+    &:hover{
+      background: $gray98;
+    }
+  }
+}
+@mixin ellipsis{
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+@mixin no-scrollbar{
+  &::-webkit-scrollbar{
+    width: 0px;
+  }
+  &::-webkit-scrollbar-track-piece{
+    background-color: transparent;
+  }
+}
+
+// old
+@mixin defaultTag{
+  background: 95;
+  color: $primary;
+}
+@mixin no-scrollbar {
+  &::-webkit-scrollbar{
+    width: 0px;
+    height: 0px;
+  }
+  &::-webkit-scrollbar-track-piece{
+    background-color: transparent;
+  }
+}
+@mixin defaultButton{
+  @include defaultTag;
+  @include no-select;
+  &:hover{
+    color: white;
+    background: $primary;
+  }
+  &.active{
+    background: 25;
+    color: $primary;
+  }
+}

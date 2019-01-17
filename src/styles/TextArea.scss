@@ -1,0 +1,274 @@
+@import './variables.scss';
+.editor-box {
+  width: 100%;
+}
+.RichEditor-root {
+  line-height: 130%;
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 10px 0;
+  .DraftEditor-root {
+    position: relative;
+  }
+  span {
+    display: inline-block;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    z-index: 100;
+    position: fixed;
+    padding: 5px 10px;
+    border-radius: 20px;
+    height: 40px;
+    background: black;
+    color: white;
+    span, i {
+      color: white;
+    }
+    & > div {
+      display: flex;
+      align-items: center;
+      & > span {
+        border-radius: 5px;
+        &:hover {
+          background: $gray50;
+        }
+      }
+    }
+    & > div:not(:last-child) {
+      padding-right: 10px;
+      border-right: 1px solid white;
+    }
+    > div [class*='activeButton'] {
+      background: white;
+      border-radius: 5px;
+
+      svg path {
+        fill: $primary;
+      }
+      span, i {
+        color: $primary;
+      }
+      color: $primary;
+    }
+    svg {
+      height: 15px;
+      path {
+        fill: white;
+      }
+    }
+    span {
+      @include center;
+      width: 25px;
+      height: 20px;
+      margin: 0 3px;
+    }
+  }
+  .public-DraftStyleDefault-block{
+    display: inline-block;
+    align-items: center;
+    span{
+      line-height: 150%;
+    }
+  }
+  ol {
+    counter-reset: line;
+    li {
+      counter-increment: line;
+    }
+  }
+  span[style*='font-weight: bold;'] span{
+    font-weight: bold;
+  }
+  span[style*='background-color: yellow;']{
+    background-color: $primary !important;
+    color: white !important;
+  }
+  span[style*='vertical-align: super;']{
+    span{
+      font-size: 80% !important;
+      margin-bottom: 10px;
+    }
+  }
+  span[style*='vertical-align: sub;']{
+    span{
+      font-size: 80% !important;
+      margin-top: 10px;
+    }
+  }
+  span[style*='text-decoration: underline;']{
+    span{
+      text-decoration: underline;
+    }
+  }
+}
+.public-DraftEditor-content {
+  & > div > div span, ol span{
+    font-size: 14px !important
+  }
+}
+.public-DraftEditorPlaceholder-root {
+  &[class*='hasFocus'] {
+    color: $gray70;
+  }
+  line-height: 100%;
+  color: $gray50;
+  position: absolute;
+  top: 3px;
+  font-size: 14px;
+}
+blockquote{
+  position: relative;
+  padding: 20px;
+  @include center;
+  &::before{
+    content: '❝';
+    top: 5px;
+    font-size: 20px;
+    left: 5px;
+    position: absolute;
+    color: $primary;
+  }
+  &::after{
+    content: '❞';
+    right: 5px;
+    bottom: 5px;
+    font-size: 20px;
+    color: $primary;
+    position: absolute;
+  }
+  span{
+    @include center;
+    text-align: center !important;
+  }
+}
+.public-DraftEditor-block {
+  position: relative
+}
+.public-DraftStyleDefault-unorderedListItem {
+  list-style-position: inside;
+  list-style-type: square;
+  position: relative;
+  color: $primary;
+  font-size: 14px;
+    span{
+      color: $gray30;
+    }
+}
+.public-DraftStyleDefault-pre {
+  counter-reset: line;
+  margin: 10px 20px;
+  pre {
+    display: flex;
+    counter-increment: line;
+    background: $gray95;
+    border-left: 3px solid $primary;
+    background-color: $gray95;
+    font-family: monospace;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    div {
+      display: flex !important;
+      align-items: center;
+    }
+    span{
+      font-family: monospace;
+      word-break: break-word;
+    }
+    &::before {
+      @include center;
+      content: counter(line);
+      font-size: 14px;
+      width: 30px;
+      flex-shrink: 0;
+      margin-right: 10px;
+      color: $primary30;
+      background: $primary80;
+      height: 24px;
+    }
+  }
+}
+
+.public-DraftStyleDefault-unorderedListItem.public-DraftStyleDefault-depth0 {
+  list-style-type: disc
+}
+
+.public-DraftStyleDefault-unorderedListItem.public-DraftStyleDefault-depth1 {
+  list-style-type: circle
+}
+
+.public-DraftStyleDefault-orderedListItem {
+  list-style-type: none;
+  position: relative
+}
+.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-listRTL:before {
+  position: absolute;
+  right: -36px;
+  text-align: left;
+  width: 30px
+}
+
+.public-DraftStyleDefault-orderedListItem:before {
+  content: counter(line) ". ";
+  top: 5px;
+  left: -36px;
+  width: 30px;
+  color: $primary;
+  counter-increment: ol0
+}
+
+.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth1:before {
+  content: counter(ol1) ". ";
+  counter-increment: ol1
+}
+
+.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth2:before {
+  content: counter(ol2) ". ";
+  counter-increment: ol2
+}
+
+.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth3:before {
+  content: counter(ol3) ". ";
+  counter-increment: ol3
+}
+
+.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth4:before {
+  content: counter(ol4) ". ";
+  counter-increment: ol4
+}
+
+.Draftail-DividerBlock {
+  border: 0;
+  background: #ddd;
+  height: 1px;
+  margin: 10px 0
+}
+@media (max-width: 500px) {
+  .RichEditor-root {
+    .controls {
+      left: 0 !important;
+      top: calc(50vh - 195px) !important;
+      height: auto;
+      width: 40px;
+      display: flex;
+      flex-direction: column;
+      & > div {
+        padding: 10px 0 !important;
+        border-right: 0 !important;
+        display: flex;
+        flex-direction: column;
+        & > span:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}

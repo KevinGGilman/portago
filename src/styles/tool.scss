@@ -1,0 +1,78 @@
+@import '../styles/variables.scss';
+
+.tool {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .list {
+        height: 100vh;
+        width: 100%;
+    }
+    .add {
+        height: 40px;
+        border-radius: 0;
+        i {
+            margin-right: 10px;
+        }
+    }
+    &.empty {
+        align-items: center;
+        justify-content: center;
+        .list {
+            height: 0;
+        }
+    }
+    .list {
+        padding: 20px;
+        overflow: auto;
+    }
+    .item {
+        background-color: $gray98;
+        margin-bottom: 10px;
+        display: flex;
+        .image {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+        }
+        .text {
+            width: 100%;
+            padding: 10px;
+        }
+        .input i {
+            @include center;
+            width: 25px;
+            height: 25px;
+            flex-shrink: 0;
+            background-color: $gray80;
+            color: white;
+        }
+        .select {
+            border-radius: 0;
+        }
+        input {
+            width: 100%;
+            margin-bottom: 10px;
+            border-radius: 0;
+        }
+        .move {
+            display: flex;
+            i {
+                cursor: pointer;
+                color: $primary;
+                font-size: 25px;
+                margin-right: 5px;
+                &:hover {
+                    color: $primary30;
+                }
+            }
+
+        }
+        .fa-trash {
+            height: inherit;
+            border-radius: 0;
+        }
+    }
+    
+}
