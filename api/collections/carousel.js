@@ -5,13 +5,12 @@ const sendError = require('../methodes/sendError')
 const posts = (socket, io, db, user) => {
   socket.on('carousel/insert', async (req, callback) => {
     try {
-      const data = {
-        title: req.title,
-        paragraph: req.paragraph,
-        faIcon: req.faIcon,
-        faType: req.faType
+      const query = {
+        faIcon: '',
+        faType: 'Solid',
+        fr: { title: '', descrition: '' },
+        en: { title: '', descrition: '' }
       }
-
       const imageQuery = {
         name: req.image.name,
         type: req.image.type,
@@ -21,31 +20,10 @@ const posts = (socket, io, db, user) => {
         height: req.image.height
       }
       const imageId = await socket._events['files/insert'](imageQuery)
-      data.image = imageId
-      let iconQuery
-      if (req.customIcon) {
-        iconQuery = {
-          name: req.customIcon.name,
-          type: req.customIcon.type,
-          size: req.customIcon.size,
-          url: req.customIcon.url,
-          width: req.customIcon.width,
-          height: req.customIcon.height
-        }
-        const iconId = await socket._events['files/insert'](iconQuery)
-        data.customIcon = iconId
-      }
-      let query = {}
-      Object.keys(data).forEach((key) => {
-        if (data[key] !== undefined) query[key] = data[key]
-      })
+      query.image = imageId
+
       const _id = await dbQueries.insertOne(db, 'carousel', query)
-      sendJSON(callback, {
-        _id,
-        ...data,
-        image: imageQuery,
-        customIcon: iconQuery
-      })
+      sendJSON(callback, { _id, ...query, image: imageQuery })
     } catch (err) {
       sendError(callback, err)
     }
@@ -54,11 +32,10 @@ const posts = (socket, io, db, user) => {
   socket.on('carousel/edit', async (req, callback) => {
     try {
       const data = {
-        title: req.title,
-        paragraph: req.paragraph,
+        fr: { title: req.fr.title, description: req.fr.description },
+        en: { title: req.en.title, description: req.en.description },
         faIcon: req.faIcon,
         faType: req.faType
-
       }
 
       if (req.image) {

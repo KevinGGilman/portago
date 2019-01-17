@@ -5,6 +5,11 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    .tab-group {
+        height: 60px;
+        flex-shrink: 0;
+        background: $gray95;
+    }
     .list {
         height: 100vh;
         width: 100%;

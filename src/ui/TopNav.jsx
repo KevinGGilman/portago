@@ -5,6 +5,9 @@ export const TopNav = (props) => (
   <nav id='top-nav'>
     <img src={logo} />
     <div>
+      <Link to='/'>
+        <i className='fas fa-home' />{props.global.say.home}
+      </Link>
       <Link to='/store'>
         <i className='fas fa-store' />{props.global.say.store}
       </Link>

@@ -64,6 +64,18 @@ footer {
   a {
     display: flex;
   }
+  .select {
+    background: none;
+    border: 1px solid $gray50;
+    color: $gray50;
+    &:hover {
+      background: $gray50;
+      color: white;
+    }
+  }
+  .dropdown span {
+    @include center;
+  }
 }
 
 #side-nav{

@@ -26,30 +26,31 @@ export default class Carousel extends React.Component {
           style={{ backgroundColor: 'hsl(0, 0%, 50%)' }}
         >
           <div className='container'>
-            <i className='far fa-image' />
+            <i className='far fa-spinner' />
             <div className='text'>
-              <h2>Ajouter une image</h2>
+              <h2>{this.props.global.say.loading}</h2>
             </div>
           </div>
         </div>
       )
     }
-    const { faIcon, faType, customIcon, title, paragraph, image } = item
+    const { faIcon, faType, customIcon, image } = item
+    const { lang } = this.props.global
     return (
       <div className='carousel' style={{ backgroundImage: `url('${image.url}')` }}>
         <i
           className='fas fa-left-arrow'
           onClick={() => this.setState({ index: this.state.index - 1 })}
         />
-        {(faIcon || customIcon || title || paragraph) &&
+        {(faIcon || customIcon || item[lang].title || item[lang].description) &&
           <div className='container'>
             {faIcon && <i
               className={`fa${faType.charAt(0).toLowerCase()} fa-${faIcon || ''}`}
             /> }
             {customIcon && <img src={customIcon} alt='custom icon' /> }
             <div className='text'>
-              {title && <h1>{title}</h1>}
-              {paragraph && <p>{paragraph}</p>}
+              {item[lang].title && <h1>{item[lang].title}</h1>}
+              {item[lang].description && <p>{item[lang].description}</p>}
             </div>
           </div>
         }

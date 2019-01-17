@@ -242,7 +242,8 @@ input {
   display: flex;
   flex-direction: column;
   position: fixed;
-  // overflow-y: scroll;
+  height: auto;
+  overflow-y: auto;
   margin-top: 5px;
   z-index: 20;
   border-radius: 10px;

@@ -441,13 +441,14 @@ export class Dropdown extends React.Component {
             key={index}
             onClick={() => this.props.onChange(value, index)}
           >
-            {((isNaN(value) || value instanceof moment) && this.props.default)
+            {this.props.outputList && this.props.outputList[index]}
+            {!this.props.outputList && (((isNaN(value) || value instanceof moment) && this.props.default)
               ? <React.Fragment>
                 <span>{this.renderValue(index + 1, this.props.default, this.props.plural)}</span>
                 <span>{value instanceof moment ? value.format('ddd MMM DD') : value}</span>
               </React.Fragment>
               : this.renderValue(value, this.props.default, this.props.plural)
-            }
+            )}
           </span>
         ))}
       </div>

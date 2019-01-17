@@ -20,6 +20,7 @@ class App extends React.Component {
       do: actions,
       carousel: [],
       user: undefined,
+      lang: lang.includes('en') ? 'en' : 'fr',
       say: lang.includes('en') ? en : fr,
       setState: (state, callback) => this.setState(state, callback && callback())
     }
