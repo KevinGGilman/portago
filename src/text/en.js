@@ -12,6 +12,15 @@ export const en = {
   titlePlaceholder: 'Enter a title',
   descriptionPlaceholder: 'Enter a description',
   iconPlaceholder: 'Enter a "Font Awsome" icon name',
+  addressPlaceholder: 'Enter an address',
+  textareaPlaceholder: 'Write something...',
   addImage: 'Add an image',
-  loading: 'Loading'
+  addLocation: 'Add a location',
+  addPost: 'Add a post',
+  loading: 'Loading',
+  searchMapPlaceholder: 'Enter an address or a postal code',
+  getCurrentLocation: 'Get curent location',
+  seeInMaps: 'See in Google Maps',
+  copy: 'Copy'
+
 }

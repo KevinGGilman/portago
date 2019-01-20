@@ -6,16 +6,16 @@ export const TopNav = (props) => (
     <img src={logo} />
     <div>
       <Link to='/'>
-        <i className='fas fa-home' />{props.global.say.home}
+        <i className='fas fa-home' /><span>{props.global.say.home}</span>
       </Link>
       <Link to='/store'>
-        <i className='fas fa-store' />{props.global.say.store}
+        <i className='fas fa-store' /><span>{props.global.say.store}</span>
       </Link>
-      <Link to='/salesPoints'>
-        <i className='fas fa-map-pin' />{props.global.say.salePoints}
+      <Link to='/maps'>
+        <i className='fas fa-map-pin' /><span>{props.global.say.salePoints}</span>
       </Link>
       <Link to='/about'>
-        <i className='fas fa-info-circle' />{props.global.say.about}
+        <i className='fas fa-info-circle' /><span>{props.global.say.about}</span>
       </Link>
     </div>
   </nav>

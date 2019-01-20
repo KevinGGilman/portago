@@ -12,7 +12,15 @@ export const fr = {
   titlePlaceholder: 'Entrer un title',
   descriptionPlaceholder: 'Entrer une description',
   iconPlaceholder: 'Entrer un nom d\'icon "Font Awsome"',
+  addressPlaceholder: 'Entrer une adresse',
+  textareaPlaceholder: 'Écrire quelque chose...',
   addImage: 'Ajouter une image',
-  loading: 'Chargement'
+  addLocation: 'Ajouter une localisation',
+  addPost: 'Ajouter une publication',
+  loading: 'Chargement',
+  searchMapPlaceholder: 'Entrer une adresse ou un code postal',
+  getCurrentLocation: 'Utiliser mon emplacement',
+  seeInMaps: 'Voir dans Google Maps',
+  copy: 'Copier'
 
 }

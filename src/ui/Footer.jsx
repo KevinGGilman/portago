@@ -16,7 +16,7 @@ export const Footer = (props) => {
       </a>
       <div />
       <Select
-        value={props.global.say[props.global.lang]}
+        value={props.global.lang.charAt(0).toUpperCase() + props.global.lang.charAt(1)}
         onChange={(value) => props.global.setState({
           lang: value,
           say: value.includes('en') ? en : fr

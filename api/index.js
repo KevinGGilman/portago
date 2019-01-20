@@ -16,7 +16,7 @@ const dataBase = {
 }
 
 const collectionList = [
-  'users', 'files', 'carousel'
+  'users', 'files', 'carousel', 'locations', 'posts'
 ]
 http.listen(port, () => {
   console.log(`listening on port ${port}`)

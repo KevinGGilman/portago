@@ -19,6 +19,8 @@ class App extends React.Component {
       config,
       do: actions,
       carousel: [],
+      locationList: [],
+      postList: [],
       user: undefined,
       lang: lang.includes('en') ? 'en' : 'fr',
       say: lang.includes('en') ? en : fr,
@@ -37,6 +39,14 @@ class App extends React.Component {
     socket.emit('carousel/list', {}, (err, result) => {
       if (err) return
       this.setState({ carousel: result })
+    })
+    socket.emit('locations/list', {}, (err, result) => {
+      if (err) return
+      this.setState({ locationList: result })
+    })
+    socket.emit('posts/list', {}, (err, result) => {
+      if (err) return
+      this.setState({ postList: result })
     })
   }
   render () {

@@ -11,6 +11,7 @@
         display: flex;
         align-items: center;
         padding: 30px;
+        max-width: calc(100vw - 40px);
         border-radius: 5px 0;
         background-color: hsla(0, 0%, 100%, 0.8);
         i {
@@ -26,5 +27,15 @@
     }
     p {
         font-size: 20px;
+    }
+}
+@media screen and (max-width: 760px) {
+    .carousel {
+        h1 {
+            font-size: 18px;
+        }
+        p {
+            font-size: 14px;
+        }
     }
 }

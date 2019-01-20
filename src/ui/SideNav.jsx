@@ -15,5 +15,11 @@ export const SideNav = (props) => (
     <Link to='/settings/carousel'>
       <i className='fas fa-images' />{props.global.say.carousel}
     </Link>
+    <Link to='/settings/maps'>
+      <i className='fas fa-map-pin' />{props.global.say.salePoints}
+    </Link>
+    <Link to='/settings/about'>
+      <i className='fas fa-info-circle' />{props.global.say.about}
+    </Link>
   </nav>
 )

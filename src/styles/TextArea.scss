@@ -2,12 +2,18 @@
 .editor-box {
   width: 100%;
 }
+.DraftEditor-root {
+    h4, h3, h2 {
+      margin-bottom: 10px !important;
+    }
+}
 .RichEditor-root {
   line-height: 130%;
   display: flex;
   align-items: center;
   min-height: 40px;
   padding: 10px 0;
+
   .DraftEditor-root {
     position: relative;
   }

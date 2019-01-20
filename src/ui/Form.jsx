@@ -190,6 +190,7 @@ export class Input extends React.Component {
           <Select
             value={this.props.rightValue}
             optionList={this.props.rightList}
+            outputList={this.props.outputList}
             onChange={(item) => this.props.onOptionChange(item)}
           />
         }
@@ -635,7 +636,8 @@ export class Tooltip extends React.Component {
     this.tooltipRef.parentNode.removeEventListener('mouseenter', this.toggleTooltip)
     this.tooltipRef.parentNode.removeEventListener('mouseleave', this.toggleTooltip)
   }
-  toggleTooltip () {
+  toggleTooltip (evt) {
+    this.setPosition()
     this.setState({ isActive: !this.state.isActive })
   }
   setPosition () {

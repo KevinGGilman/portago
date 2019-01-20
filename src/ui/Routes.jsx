@@ -2,8 +2,12 @@ import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { TopNav } from './TopNav'
 import { SideNav } from './SideNav'
-import Carousel from './Carousel'
+import MapsTool from './tools/Maps'
 import CarouselTool from './tools/Carousel'
+import AboutTool from './tools/About'
+import Maps from './Maps'
+import Carousel from './Carousel'
+import About from './About'
 import Login from './Login'
 import { Footer } from './Footer'
 import modalMap from './modals'
@@ -36,6 +40,8 @@ export class Routes extends React.Component {
         <Switch>
           <PublicRoute path='/login' component={Login} global={global} />
           <PrivateRoute path='/settings/carousel' component={CarouselTool} global={global} />
+          <PrivateRoute path='/settings/maps' component={MapsTool} global={global} />
+          <PrivateRoute path='/settings/about' component={AboutTool} global={global} />
           <Route exact path='/' render={() => (
             <Carousel
               list={global.carousel}
@@ -43,6 +49,8 @@ export class Routes extends React.Component {
               global={global}
             />
           )} />
+          <Route exact path='/maps' render={() => <Maps global={global} />} />
+          <Route exact path='/about' render={() => <About global={global} />} />
         </Switch>
         {!isSettings && !isLogin && <Footer global={global} />}
       </React.Fragment>

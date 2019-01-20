@@ -73,11 +73,36 @@ footer {
       color: white;
     }
   }
-  .dropdown span {
-    @include center;
+  .dropdown {
+    width: 75px;
+    right: 20px !important;
+    span {
+      @include center;
+    }
   }
 }
-
+@media screen and (max-width: 760px) {
+  #top-nav {
+    span {
+      display: none;
+    }
+  }
+  footer {
+    a h5 {
+      display: none;
+    }
+    a:hover h5 {
+      @include center;
+      position: absolute;
+      height: 30px;
+      bottom: 70px;
+      padding: 0 10px;
+      border-radius: 15px;
+      background: hsla(0,0%,0%, 0.8);
+      color: white;
+    }
+  }
+}
 #side-nav{
   display: flex;
   flex-direction: column;
