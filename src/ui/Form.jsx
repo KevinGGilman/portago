@@ -140,9 +140,9 @@ export class Input extends React.Component {
     document.removeEventListener('click', this.closeSelect)
   }
   filterDropdown () {
-    const { value, bottomList } = this.props
+    const { value, bottomList, isSearch } = this.props
+    if (!value || !isSearch) return bottomList
     const lowered = value.toLowerCase()
-    if (!value) return bottomList
     return bottomList.filter(v => v.toLowerCase().includes(lowered))
   }
   componentDidMount () {
@@ -217,6 +217,7 @@ export class Input extends React.Component {
         {this.state.isSelecting &&
           <Dropdown
             optionList={this.filterDropdown()}
+            outputList={this.props.outputList}
             onChange={(value) => this.props.onChange(value)}
           />
         }

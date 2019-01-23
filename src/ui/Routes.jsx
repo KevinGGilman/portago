@@ -5,10 +5,13 @@ import { SideNav } from './SideNav'
 import MapsTool from './tools/Maps'
 import CarouselTool from './tools/Carousel'
 import AboutTool from './tools/About'
-import Maps from './Maps'
-import Carousel from './Carousel'
-import About from './About'
-import Login from './Login'
+import ArticlesTool from './tools/Articles'
+import CategoriesTool from './tools/Categories'
+import Maps from './pages/Maps'
+import Store from './Store/Store'
+import Carousel from './pages/Carousel'
+import About from './pages/About'
+import Login from './pages/Login'
 import { Footer } from './Footer'
 import modalMap from './modals'
 
@@ -42,6 +45,10 @@ export class Routes extends React.Component {
           <PrivateRoute path='/settings/carousel' component={CarouselTool} global={global} />
           <PrivateRoute path='/settings/maps' component={MapsTool} global={global} />
           <PrivateRoute path='/settings/about' component={AboutTool} global={global} />
+          <PrivateRoute path='/settings/categories' component={CategoriesTool} global={global} />
+          <PrivateRoute path='/settings/pockets' type='pocket' component={ArticlesTool} global={global} />
+          <PrivateRoute path='/settings/straws' type='straw' component={ArticlesTool} global={global} />
+          <PrivateRoute path='/settings/brushes' type='brush' component={ArticlesTool} global={global} />
           <Route exact path='/' render={() => (
             <Carousel
               list={global.carousel}
@@ -49,8 +56,9 @@ export class Routes extends React.Component {
               global={global}
             />
           )} />
-          <Route exact path='/maps' render={() => <Maps global={global} />} />
-          <Route exact path='/about' render={() => <About global={global} />} />
+          <Route path='/maps' render={() => <Maps global={global} />} />
+          <Route path='/about' render={() => <About global={global} />} />
+          <Route path='/store' render={() => <Store global={global} />} />
         </Switch>
         {!isSettings && !isLogin && <Footer global={global} />}
       </React.Fragment>

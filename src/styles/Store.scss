@@ -1,0 +1,171 @@
+@import '../styles/variables.scss';
+
+#store {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/bois.jpg');
+  padding: 60px 0;
+
+  .step-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-shrink: 0;
+    width: 100%;
+    height: 50px;
+    border-radius: 0;
+    border-top: 1px solid $gray80;
+    background-color: hsla(0, 0%, 100%, 0.9);
+    color: $gray50;
+    span {
+      color: $gray50;
+      &.active {
+        border-color: $gray50;
+      }
+    }
+    .step-item {
+      @include center;
+      i {
+        margin-left: 10px;
+        font-size: 24px;
+      }
+      i, span {
+        color: $gray70;
+      }
+      &.active * {
+        color: $gray30;
+        font-weight: bold;
+      }
+    }
+    .button {
+      background: $gray30;
+      color: white !important;
+    }
+  }
+  .list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    max-height: calc(100vh - 170px);
+    padding: 30px;
+    overflow: auto;
+  }
+  
+  .item {
+    @include shadow;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 150px;
+    height: max-content;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 5px;
+    transition: all 0.1s ease-in-out;
+    &:hover {
+      transform: rotateX(10deg) rotateY(-10deg) rotateZ(5deg) scale(1.05);
+    }
+  }
+  .pic {
+    background-color: hsla(0, 0%, 0%, 0.5);
+    width: 150px !important;
+    height: 150px;
+    object-fit: cover;
+    div {
+      width: 100%;
+      height: 100%;
+      @include center;
+      text-align: center;
+      flex-direction: column;
+    }
+    p {
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      text-shadow: 0 0 2px black;
+    }
+    span {
+      @include center;
+      font-size: 12px;
+      height: 20px;
+      padding: 0 10px;
+      width: auto;
+      border-radius: 10px;
+      margin: 5px 5px 0 5px;
+      background-color: $primary;
+      color: white;
+    }
+  }
+  .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 40px;
+    background-color: hsla(0, 0%, 100%, 0.8); 
+    .button {
+      @include center;
+      width: 20px;
+      height: 20px;
+    }
+  }
+  .open, .close {
+    display: none;
+  }
+  .articles {
+    .item {
+      height: auto;
+    }
+    .text {
+      padding: 10px;
+      border-radius: 0 0 5px 5px;
+      width: 100%;
+      background-color: hsla(0, 0%, 100%, 0.8);
+    }
+    .pic {
+      border-radius: 5px 5px 0 0;
+    }
+    p {
+      font-weight: bold;
+    }
+    
+  }
+}
+
+@media screen and (max-width: 760px) {
+  #store {
+    .store-nav {
+      max-width: 100vw !important;
+      width: 100vw !important;
+    }
+    .close, .open {
+      display: flex;
+    }
+    .open {
+      position: fixed;
+      z-index: 1000;
+      border-radius: 25px;
+      bottom: 80px;
+      right: 20px;
+      background-color: $primary;
+      width: 50px;
+      height: 50px;
+      @include shadow;
+      font-size: 20px;
+      &:hover {
+        background-color: $primary30;
+      }
+    }
+    .close {
+      width: 100%;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      background-color: $gray90 !important;
+      color: $gray30 !important;
+    }
+  }
+}

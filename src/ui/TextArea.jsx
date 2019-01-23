@@ -1,7 +1,6 @@
 import React from 'react'
 import { stateToHTML } from 'draft-js-export-html'
 import { stateFromHTML } from 'draft-js-import-html'
-import { Emoji } from './Emoji'
 import { highlight, quote, sub, exp, underline, italic, bold } from '../other/icons'
 import { Editor, EditorState, RichUtils } from 'draft-js'
 export default class RichEditor extends React.Component {
@@ -178,20 +177,6 @@ export default class RichEditor extends React.Component {
               spellCheck
             />
           </div>
-          {!this.props.disableEmoji &&
-            <i
-              className='far fa-smile-plus'
-              onClick={() => this.setState({ isEmoji: true })}
-            >
-              {this.state.isEmoji &&
-                <Emoji
-                  {...this.props}
-                  setState={(obj) => this.setState(obj)}
-                  editorState={editorState}
-                />
-              }
-            </i>
-          }
         </div>
       </div>
     )

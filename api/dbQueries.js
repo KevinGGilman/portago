@@ -51,7 +51,33 @@ module.exports = {
       })
     })
   },
-
+  findArticles (db, query) {
+    return new Promise((resolve, reject) => {
+      const $group = {
+        _id: '$_id',
+        imageList: { $push: '$imageList' },
+        count: { $first: '$count' },
+        fr: { $first: '$fr' },
+        en: { $first: '$en' }
+      }
+      if (query.type === 'pocket') $group.category = { $first: '$category' }
+      db.collection('articles').aggregate([
+        { $match: query },
+        { $sort: { order: 1 } },
+        { $lookup: {
+          from: 'files',
+          localField: 'imageList',
+          foreignField: '_id',
+          as: 'imageList'
+        } },
+        { $unwind: { path: '$imageList', preserveNullAndEmptyArrays: true } },
+        { $group }
+      ]).toArray((err, result) => {
+        if (err) reject(new Error(err))
+        else resolve(result)
+      })
+    })
+  },
   findArrayOfElement (db, collection, query, element) {
     return new Promise((resolve, reject) => {
       db.collection(collection).aggregate([

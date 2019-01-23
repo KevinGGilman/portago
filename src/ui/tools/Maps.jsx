@@ -25,7 +25,7 @@ export default class Carousel extends React.Component {
       list[index][key] = value
     }
     this.setState({ list })
-    this.doAfterSilence(2000, () => {
+    this.doAfterSilence(1000, () => {
       this.props.global.socket.emit('locations/edit', list[index], (err, result) => {
         if (err) return console.log(err)
         list[index] = result

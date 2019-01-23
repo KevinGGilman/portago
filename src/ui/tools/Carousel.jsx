@@ -1,4 +1,5 @@
 import React from 'react'
+import { Pic } from '../Pic'
 import { Input, Button, Tab } from '../Form'
 export default class Carousel extends React.Component {
   constructor (props) {
@@ -10,6 +11,16 @@ export default class Carousel extends React.Component {
     this.chooseFile = this.props.global.do.chooseFile.bind(this)
     this.setItem = this.setItem.bind(this)
     this.doAfterSilence = this.props.global.do.doAfterSilence.bind(this)
+  }
+  async setImage (_id, index) {
+    const file = await this.chooseFile('image')
+    const image = { ...file, _id }
+    const list = this.state.list
+    list[index] = { ...list[index], image }
+    this.setState({ list })
+    this.props.global.socket.emit('files/set/image', image, (err, result) => {
+      if (err) console.log(err)
+    })
   }
   async addImage (type) {
     const file = await this.chooseFile(type)
@@ -33,7 +44,7 @@ export default class Carousel extends React.Component {
       list[index][key] = value
     }
     this.setState({ list })
-    this.doAfterSilence(2000, () => {
+    this.doAfterSilence(1000, () => {
       this.props.global.socket.emit('carousel/edit', list[index])
     })
   }
@@ -62,7 +73,10 @@ export default class Carousel extends React.Component {
           {this.state.list.map((item, index) => (
             <div className='item' key={item._id}>
               {item.customIcon && <img className='icon' src={item.customIcon} /> }
-              <img className='image' src={item.image.url} />
+              <Pic
+                image={item.image.url}
+                onClick={() => this.setImage(item.image._id, index)}
+              />
               <div className='text'>
                 <Input
                   value={item[this.state.lang].title}

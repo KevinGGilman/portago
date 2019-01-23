@@ -20,7 +20,7 @@ body, html {
   display: flex;
   align-items: center;
   position: fixed;
-  z-index: 100;
+  z-index: 1;
   width: 100%;
   height: 60px;
   padding: 0 30px;
@@ -136,8 +136,71 @@ footer {
       background-color: $primary40;
     }
     i {
+      width: 20px;
       margin-right: 15px;
     }
   }
-
+}
+.image-manager {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 10px 10px 0;
+  .placeholder {
+    border: 3px dashed $primary;
+    margin: 0 5px 5px 0;
+    height: 50px !important;
+    display: flex;
+  }
+  .image-item {
+    cursor: move;
+    img {
+      width: auto;
+      max-height: 50px;
+      margin-right: 5px;
+    }
+    .svg {
+      height: 50px;
+    }
+  }
+  .button {
+    height: 50px;
+    border-radius: 0;
+    i {
+      margin-left: 5px;
+    }
+  }
+}
+.pic {
+  flex-shrink: 0;
+  display: flex;
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+  width: 200px !important;
+  height: 150px !important;
+  margin-right: 10px;
+  .count{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $black-t4;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 3px;
+  }
+  div {
+    display: none;
+    height: 100% !important;
+    width: 100% !important;
+  }
+  &:hover div {
+    @include center;
+    background: hsla(0, 0%, 0%, 0.3);
+  }
+  i {
+    color: white;
+    font-size: 24px;
+  }
 }

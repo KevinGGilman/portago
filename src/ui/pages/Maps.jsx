@@ -1,6 +1,6 @@
 import React from 'react'
-import { Input, Button, Tooltip } from './Form'
-import mapIcon from '../images/mapIcon.svg'
+import { Input, Button, Tooltip } from '../Form'
+import mapIcon from '../../images/mapIcon.svg'
 export default class Maps extends React.Component {
   constructor (props) {
     super(props)

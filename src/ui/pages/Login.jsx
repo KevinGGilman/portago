@@ -1,5 +1,5 @@
 import React from 'react'
-import { Fieldset, Input, Button } from './Form'
+import { Fieldset, Input, Button } from '../Form'
 
 export default class App extends React.Component {
   constructor (props) {

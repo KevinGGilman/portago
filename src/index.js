@@ -21,6 +21,10 @@ class App extends React.Component {
       carousel: [],
       locationList: [],
       postList: [],
+      pocketList: [],
+      strawList: [],
+      brushList: [],
+      categoryList: [],
       user: undefined,
       lang: lang.includes('en') ? 'en' : 'fr',
       say: lang.includes('en') ? en : fr,
@@ -47,6 +51,22 @@ class App extends React.Component {
     socket.emit('posts/list', {}, (err, result) => {
       if (err) return
       this.setState({ postList: result })
+    })
+    socket.emit('articles/list', { type: 'pocket' }, (err, result) => {
+      if (err) return
+      this.setState({ pocketList: result })
+    })
+    socket.emit('articles/list', { type: 'straw' }, (err, result) => {
+      if (err) return
+      this.setState({ strawList: result })
+    })
+    socket.emit('articles/list', { type: 'brush' }, (err, result) => {
+      if (err) return
+      this.setState({ brushList: result })
+    })
+    socket.emit('categories/list', {}, (err, result) => {
+      if (err) return
+      this.setState({ categoryList: result, categoryMap: actions.listToMap(result) })
     })
   }
   render () {

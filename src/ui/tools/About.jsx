@@ -22,7 +22,7 @@ export default class About extends React.Component {
     const list = this.state.list
     list[index][this.state.lang][key] = value
     this.setState({ list })
-    this.doAfterSilence(2000, () => {
+    this.doAfterSilence(1000, () => {
       this.props.global.socket.emit('posts/edit', list[index], (err, result) => {
         if (err) return console.log(err)
         list[index] = result

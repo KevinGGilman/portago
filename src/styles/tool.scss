@@ -44,11 +44,6 @@
         background-color: $gray98;
         margin-bottom: 10px;
         display: flex;
-        .image {
-            width: 200px;
-            height: 150px;
-            object-fit: cover;
-        }
         .text {
             width: 100%;
             padding: 10px;
@@ -71,6 +66,8 @@
         }
         .move {
             display: flex;
+            align-items: center;
+            height: 30px;
             i {
                 cursor: pointer;
                 color: $primary;

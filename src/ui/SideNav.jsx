@@ -21,5 +21,17 @@ export const SideNav = (props) => (
     <Link to='/settings/about'>
       <i className='fas fa-info-circle' />{props.global.say.about}
     </Link>
+    <Link to='/settings/categories'>
+      <i className='fas fa-books' />{props.global.say.categories}
+    </Link>
+    <Link to='/settings/pockets'>
+      <i className='fas fa-tags' />{props.global.say.pocket + 's'}
+    </Link>
+    <Link to='/settings/straws'>
+      <i className='fas fa-tags' />{props.global.say.straw + 's'}
+    </Link>
+    <Link to='/settings/brushes'>
+      <i className='fas fa-tags' />{props.global.say.brush}
+    </Link>
   </nav>
 )
