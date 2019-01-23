@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
-import urlapi from 'url'
 /*****************************************************************************
 ----------------------------------Content  ----------------------------------
 1.  functions
@@ -52,7 +51,7 @@ function getData (url) {
     fullUrl = 'http://' + url
   }
   url.includes('facebook') ? obj['image'] = 'images/facebook.jpg' : obj['image'] = 'images/defaultLink.jpg'
-  let host = urlapi.parse(fullUrl).hostname
+  let host = 'getHost'
   obj.title = host
   obj.url = fullUrl
   return obj
