@@ -61,6 +61,7 @@ export class Routes extends React.Component {
           <Route path='/about' render={() => <About global={global} />} />
           <Route path='/store' render={() => <Store global={global} />} />
           <Route path='/notFound' render={() => <NotFound global={global} />} />
+          <Route path='/settings' render={() => <SideNav global={global} />} />
           <Redirect to='/notFound' />
         </Switch>
         {!isSettings && !isLogin && <Footer global={global} />}
