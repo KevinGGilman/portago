@@ -26,10 +26,7 @@ export default class Carousel extends React.Component {
     const item = this.props.list[this.state.index]
     if (!item) {
       return (
-        <div
-          className='carousel'
-          style={{ backgroundColor: 'hsl(0, 0%, 50%)' }}
-        >
+        <div className='carousel'>
           <div className='container'>
             <i className='far fa-spinner' />
             <div className='text'>

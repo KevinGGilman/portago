@@ -17,6 +17,11 @@ export default class Carousel extends React.Component {
       this.setState({ list })
     })
   }
+  delete (item, index) {
+    const query = { _id: item._id }
+    this.state.list.splice(index, 1)
+    this.props.global.socket.emit('locations/remove', query)
+  }
   setItem (index, key, value) {
     const list = this.state.list
     if (['address', 'description'].includes(key)) {

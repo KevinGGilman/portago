@@ -83,6 +83,7 @@ export default class Images extends React.Component {
               draggable
               key={index}
               className='image-item'
+              onClick={() => this.props.onSet(obj._id, index)}
               onDragEnd={this.onDragEnd}
               onDragStart={(evt) => this.onDragStart(evt, index)}
             >

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Input, Button, Tab, Select } from '../Form'
 import ImageManager from '../ImageManager'
+import resizebase64 from 'resize-base64'
 export default class Articles extends React.Component {
   constructor (props) {
     super(props)
@@ -14,9 +15,18 @@ export default class Articles extends React.Component {
     this.setItem = this.setItem.bind(this)
     this.doAfterSilence = this.props.global.do.doAfterSilence.bind(this)
   }
+  async replaceImage (_id, imageIndex, index) {
+    const file = await this.chooseFile('image')
+    const image = { ...file, _id, urlShort: resizebase64(file.url, 200, 200) }
+    const list = this.state.list
+    list[index].imageList[imageIndex] = image
+    this.setState({ list })
+    this.props.global.socket.emit('files/set/image', image)
+  }
   async addImage (index) {
     const list = this.state.list
     const file = await this.chooseFile('image')
+    file.urlShort = resizebase64(file.url, 200, 200)
     list[index].imageList.push(file)
     this.setState({ list })
     const query = {
@@ -93,6 +103,7 @@ export default class Articles extends React.Component {
                 <ImageManager
                   list={item.imageList}
                   onChange={(imageList) => this.setImage({ ...item, imageList }, index)}
+                  onSet={(_id, imgIndex) => this.replaceImage(_id, imgIndex, index)}
                   onAdd={() => this.addImage(index)}
                 />
                 <Input

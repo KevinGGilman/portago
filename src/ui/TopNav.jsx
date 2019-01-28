@@ -11,9 +11,12 @@ export const TopNav = (props) => (
       <Link to='/store'>
         <i className='fas fa-store' /><span>{props.global.say.store}</span>
       </Link>
-      <Link to='/maps'>
-        <i className='fas fa-map-pin' /><span>{props.global.say.salePoints}</span>
-      </Link>
+      {props.global.locationList.length > 0 &&
+        <Link to='/maps'>
+          <i className='fas fa-map-pin' />
+          <span>{props.global.say.salePoints}</span>
+        </Link>
+      }
       <Link to='/about'>
         <i className='fas fa-info-circle' /><span>{props.global.say.about}</span>
       </Link>

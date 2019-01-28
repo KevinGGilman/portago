@@ -1,7 +1,6 @@
 export default function refreshAllRequests (isRefreshUser, globalCallback) {
-  const { global } = this.props
-  const listToMap = global.do.listToMap.bind(this)
-  let stateAccumulator = { isLoading: false }
+  const global = this.props.global || this.state
+  let stateAccumulator = { }
   let total = 0
   let count = 0
 
@@ -12,7 +11,6 @@ export default function refreshAllRequests (isRefreshUser, globalCallback) {
       if (err) return console.log(err)
       callback(result)
       if (count === total) {
-        if (!stateAccumulator.group) stateAccumulator.modal = 'ChooseGroup'
         global.setState(stateAccumulator, () => {
           if (globalCallback) globalCallback(stateAccumulator)
         })
@@ -21,23 +19,21 @@ export default function refreshAllRequests (isRefreshUser, globalCallback) {
   }
   const preState = (state) => {
     stateAccumulator = { ...stateAccumulator, ...state }
+    Object.keys(state).forEach(key => {
+      window.localStorage.setItem(key, JSON.stringify(state[key]))
+    })
   }
 
   if (isRefreshUser) get('users/self', {}, (obj) => preState({ user: obj }))
-  get('groups/list', {}, (arr) => preState({ groupList: arr }))
-  get('groups/details', {}, (obj) => preState({ group: obj }))
-  get('logs/list', {}, (arr) => preState({ logList: arr }))
-  get('comites/list', {}, (arr) => {
-    const pinData = arr.reduce(({ pinList, pinMap }, comite) => (
-      {
-        pinList: [...pinList, ...comite.pinList],
-        pinMap: { ...pinMap, ...comite.pinMap }
-      }
-    ), { pinList: [], pinMap: {} })
-    const all = { _id: 'all', name: 'All Comites', ...pinData, index: 0 }
-    preState({
-      comiteList: [all, ...arr],
-      comiteMap: listToMap(arr, { all })
-    })
-  })
+
+  get('carousel/list', {}, (arr) => preState({ carousel: arr }))
+  get('locations/list', {}, (arr) => preState({ locationList: arr }))
+  get('posts/list', {}, (arr) => preState({ postList: arr }))
+  get('articles/list', { type: 'pocket' }, (arr) => preState({ pocketList: arr }))
+  get('articles/list', { type: 'straw' }, (arr) => preState({ strawList: arr }))
+  get('articles/list', { type: 'brush' }, (arr) => preState({ brushList: arr }))
+  get('categories/list', {}, (arr) => preState({
+    categoryList: arr,
+    categoryMap: global.do.listToMap(arr)
+  }))
 }

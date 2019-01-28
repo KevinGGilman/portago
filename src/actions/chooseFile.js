@@ -1,3 +1,4 @@
+
 export default function chooseFile (type, isMultiple) {
   const accept = type.includes('image') ? 'image/*' : 'file'
   this.fileSelector = document.createElement('input')
@@ -48,6 +49,7 @@ function convertFile (file, type) {
 async function getFileDetails (file, isImage) {
 // convert file to be accessible in a server request
   let url
+  let shortUrl
   let dimmensions
   let data
   if (isImage) {
@@ -58,7 +60,7 @@ async function getFileDetails (file, isImage) {
   // get necessary data from blob
   const { name, type, size } = file
   file = { name, type, size }
-  if (isImage) file = { ...file, ...dimmensions, url }
+  if (isImage) file = { ...file, ...dimmensions, url, shortUrl }
   else file.data = data
   return file
 }

@@ -17,56 +17,39 @@ class App extends React.Component {
       socket,
       config,
       do: actions,
-      carousel: [],
-      locationList: [],
-      postList: [],
-      pocketList: [],
-      strawList: [],
-      brushList: [],
-      categoryList: [],
+      ...actions.getLocalData([
+        'carousel',
+        'locationList',
+        'postList',
+        'pocketList',
+        'strawList',
+        'brushList',
+        'categoryList'
+      ]),
       user: undefined,
       lang: lang.includes('en') ? 'en' : 'fr',
       say: lang.includes('en') ? en : fr,
       setState: (state, callback) => this.setState(state, callback && callback())
     }
-
+    this.refresh = actions.refreshAllRequests.bind(this)
+    this.onChange = actions.onChange.bind(this)
     window.addEventListener('dragover', (evt) => evt.preventDefault())
     window.addEventListener('drop', (evt) => evt.preventDefault())
     window.addEventListener('resize', () => this.forceUpdate())
+    this.refresh()
     socket.emit('users/self', { date: new Date() }, (err, result) => {
       if (err) this.setState({ user: null })
-      else {
-        this.setState({ user: result })
-      }
+      else this.setState({ user: result })
     })
-    socket.emit('carousel/list', {}, (err, result) => {
-      if (err) return
-      this.setState({ carousel: result })
-    })
-    socket.emit('locations/list', {}, (err, result) => {
-      if (err) return
-      this.setState({ locationList: result })
-    })
-    socket.emit('posts/list', {}, (err, result) => {
-      if (err) return
-      this.setState({ postList: result })
-    })
-    socket.emit('articles/list', { type: 'pocket' }, (err, result) => {
-      if (err) return
-      this.setState({ pocketList: result })
-    })
-    socket.emit('articles/list', { type: 'straw' }, (err, result) => {
-      if (err) return
-      this.setState({ strawList: result })
-    })
-    socket.emit('articles/list', { type: 'brush' }, (err, result) => {
-      if (err) return
-      this.setState({ brushList: result })
-    })
-    socket.emit('categories/list', {}, (err, result) => {
-      if (err) return
-      this.setState({ categoryList: result, categoryMap: actions.listToMap(result) })
-    })
+    this.onChange([
+      { key: 'carousel', url: 'carousel/list' },
+      { key: 'locationList', url: 'locations/list' },
+      { key: 'postList', url: 'posts/list' },
+      { key: 'pocketList', url: 'pockets/list' },
+      { key: 'strawList', url: 'straws/list' },
+      { key: 'brushList', url: 'brushes/list' },
+      { key: 'categoryList', url: 'categories/list' }
+    ])
   }
   render () {
     return (

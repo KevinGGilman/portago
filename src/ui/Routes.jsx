@@ -36,6 +36,18 @@ export class Routes extends React.Component {
     const ActiveModal = modalMap[global.modal]
     const isLogin = window.location.pathname.includes('login')
     const isSettings = window.location.pathname.includes('setting')
+    if (this.props.global.user === undefined) {
+      return (
+        <div className='carousel'>
+          <div className='container'>
+            <i className='far fa-spinner' />
+            <div className='text'>
+              <h2>{this.props.global.say.loading}</h2>
+            </div>
+          </div>
+        </div>
+      )
+    }
     return (
       <React.Fragment>
         {ActiveModal && <ActiveModal global={global} {...global.modalProps} />}
@@ -61,7 +73,7 @@ export class Routes extends React.Component {
           <Route path='/about' render={() => <About global={global} />} />
           <Route path='/store' render={() => <Store global={global} />} />
           <Route path='/notFound' render={() => <NotFound global={global} />} />
-          <Route path='/settings' render={() => <SideNav global={global} />} />
+          <PrivateRoute path='/settings' component={() => null} global={global} />
           <Redirect to='/notFound' />
         </Switch>
         {!isSettings && !isLogin && <Footer global={global} />}

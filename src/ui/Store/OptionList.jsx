@@ -12,8 +12,8 @@ export const OptionList = (props) => {
       <div className='item' onClick={() => props.onBack()}>
         <Pic>
           {props.title && <p>{props.title({
-            en: { name: 'Select also other categories' },
-            fr: { name: 'Choisir aussi d\'autres catégories' }
+            en: { name: 'Back' },
+            fr: { name: 'Retour' }
           })}</p>}
         </Pic>
       </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Input, Button } from '../Form'
 import { Pic } from '../Pic'
+import resizebase64 from 'resize-base64'
 export default class Categories extends React.Component {
   constructor (props) {
     super(props)
@@ -15,7 +16,7 @@ export default class Categories extends React.Component {
   }
   async setImage (_id, index) {
     const file = await this.chooseFile('image')
-    const image = { ...file, _id }
+    const image = { ...file, _id, urlShort: resizebase64(file.url, 200, 200) }
     const list = this.state.list
     list[index] = { ...list[index], image }
     this.setState({ list })
@@ -28,6 +29,7 @@ export default class Categories extends React.Component {
   async addItem () {
     const file = await this.chooseFile('image')
     const item = { image: file }
+    item.image.urlShort = resizebase64(item.image.url, 200, 200)
     this.props.global.socket.emit('categories/insert', item, (err, result) => {
       if (err) return
       const list = [...this.state.list, result]
