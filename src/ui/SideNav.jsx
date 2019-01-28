@@ -6,10 +6,11 @@ export const SideNav = (props) => (
     <a
       href={window.location.origin}
       onClick={() => props.global.socket.emit('users/logout')}
+      alt='logout'
     >
       <i className='fas fa-sign-out' />{props.global.say.logout}
     </a>
-    <a target='_blank' href={window.location.origin}>
+    <a target='_blank' rel='noopener noreferrer' href={window.location.origin}>
       <i className='fas fa-eye' />{props.global.say.preview}
     </a>
     <Link to='/settings/carousel'>

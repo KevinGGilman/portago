@@ -160,6 +160,7 @@ export class Input extends React.Component {
         {this.props.children}
         <input
           ref={(ref) => { this.inputRef = ref }}
+          autoComplete={this.props.autoComplete && this.props.autoComplete}
           type={this.props.type ? this.props.type : 'text'}
           value={this.props.value || this.state.value}
           onChange={(evt) => this.props.onChange

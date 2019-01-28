@@ -10,7 +10,7 @@ export const StepGroup = (props) => (
     }
     {/* <span className='step-type'>{props.global.say[props.type] + ' :'}</span> */}
     {props.stepList.map((key) => (
-      <div className={`step-item ${key === props.value ? 'active' : ''}`}>
+      <div key={key} className={`step-item ${key === props.value ? 'active' : ''}`}>
         <span>{props.global.say[key]}</span>
         <i className='far fa-angle-double-right' />
       </div>

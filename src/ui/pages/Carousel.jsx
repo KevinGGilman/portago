@@ -4,18 +4,23 @@ export default class Carousel extends React.Component {
     super(props)
     this.state = { index: 0 }
     this.goNextRecursive()
+    this.stop = false
   }
-  stop () {
+  stop (speed) {
     return new Promise((resolve) => {
-      setTimeout(() => resolve(), this.props.speed)
+      setTimeout(() => resolve(), speed)
     })
   }
   async goNextRecursive () {
     const { length } = this.props.list
+    if (!length || this.stop) return
     let { index } = this.state
-    await this.stop()
+    await this.stop(this.props.speed)
     index = index < length - 1 ? index + 1 : 0
     this.setState({ index }, this.goNextRecursive)
+  }
+  componentWillUnmount () {
+    this.stop = true
   }
   render () {
     const item = this.props.list[this.state.index]

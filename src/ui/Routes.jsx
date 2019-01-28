@@ -12,6 +12,7 @@ import Store from './Store/Store'
 import Carousel from './pages/Carousel'
 import About from './pages/About'
 import Login from './pages/Login'
+import { NotFound } from './pages/NotFound'
 import { Footer } from './Footer'
 import modalMap from './modals'
 
@@ -59,6 +60,8 @@ export class Routes extends React.Component {
           <Route path='/maps' render={() => <Maps global={global} />} />
           <Route path='/about' render={() => <About global={global} />} />
           <Route path='/store' render={() => <Store global={global} />} />
+          <Route path='/notFound' render={() => <NotFound global={global} />} />
+          <Redirect to='/notFound' />
         </Switch>
         {!isSettings && !isLogin && <Footer global={global} />}
       </React.Fragment>

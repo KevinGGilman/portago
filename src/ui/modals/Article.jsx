@@ -1,6 +1,5 @@
 import React from 'react'
-import { Modal, Button, Label, Fieldset, Select } from '../Form'
-import ImageGalery from '../ImageGalery'
+import { Modal, Button, Label, Fieldset } from '../Form'
 export default class AddComiteModal extends React.Component {
   constructor (props) {
     super(props)

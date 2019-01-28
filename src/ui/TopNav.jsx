@@ -3,7 +3,7 @@ import logo from '../images/logo.svg'
 import { Link } from 'react-router-dom'
 export const TopNav = (props) => (
   <nav id='top-nav'>
-    <img src={logo} />
+    <img src={logo} alt='logo' />
     <div>
       <Link to='/'>
         <i className='fas fa-home' /><span>{props.global.say.home}</span>

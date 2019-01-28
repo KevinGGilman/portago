@@ -1,5 +1,4 @@
 import React from 'react'
-import { Button } from '../Form'
 
 import { StepGroup } from './StepGroup'
 import { OptionList } from './OptionList'

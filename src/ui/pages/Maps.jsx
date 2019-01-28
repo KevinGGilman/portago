@@ -5,19 +5,24 @@ export default class Maps extends React.Component {
   constructor (props) {
     super(props)
     this.state = { searchVal: '', searchDist: 10, isNav: true }
+    // bindings
     this.insertMarkerList = this.insertMarkerList.bind(this)
     this.setToCurrentLocation = this.setToCurrentLocation.bind(this)
     this.compareDist = this.compareDist.bind(this)
     this.setSearch = this.setSearch.bind(this)
     this.goToGoogleMaps = this.goToGoogleMaps.bind(this)
-    this.copyAdress = this.copyAdress.bind(this)
-    this.key = 'AIzaSyDGloI_9FzwRcXO3KrlYMYdjlbVdiAlRJw'
-    this.script = document.createElement('script')
+    this.copyAddress = this.copyAddress.bind(this)
     this.setNav = this.setNav.bind(this)
+    this.setScript = this.setScript.bind(this)
     window.addEventListener('resize', this.setNav)
-    const url = `https://maps.googleapis.com/maps/api/js?key=${this.key}`
+    this.key = 'AIzaSyDGloI_9FzwRcXO3KrlYMYdjlbVdiAlRJw'
+    this.url = `https://maps.googleapis.com/maps/api/js?key=${this.key}`
+    this.setScript()
+  }
+  setScript () {
+    this.script = document.createElement('script')
     document.body.appendChild(this.script)
-    this.script.setAttribute('src', url)
+    this.script.setAttribute('src', this.url)
     this.script.onload = () => {
       const mapNode = document.getElementById('google-maps')
       this.map = new window.google.maps.Map(mapNode, {
@@ -30,6 +35,7 @@ export default class Maps extends React.Component {
   }
   componentWillUnmount () {
     window.removeEventListener('resize', this.setNav)
+    this.script.parentNode.removeChild(this.script)
   }
   setNav () {
     if (window.innerWidth > 760 && !this.state.isNav) this.setState({ isNav: true })
@@ -41,7 +47,8 @@ export default class Maps extends React.Component {
       this.setState({ searchCoords: location })
       const geocoder = new window.google.maps.Geocoder()
       geocoder.geocode({ location }, (result) => {
-        const postalCode = result[0].address_components.find(obj => obj.types.includes('postal_code')).long_name
+        const postalCode = result[0].address_components
+          .find(obj => obj.types.includes('postal_code')).long_name
         this.setState({ searchVal: postalCode })
       })
     })
@@ -89,7 +96,7 @@ export default class Maps extends React.Component {
       })
     })
   }
-  copyAdress (evt, location) {
+  copyAddress (evt, location) {
     evt.stopPropagation()
     navigator.clipboard.writeText(location[this.props.global.lang].address)
   }
@@ -163,7 +170,7 @@ export default class Maps extends React.Component {
                       <div className='options'>
                         <i
                           className='fas fa-copy'
-                          onClick={(evt) => this.copyAdress(evt, location)}
+                          onClick={(evt) => this.copyAddress(evt, location)}
                         ><Tooltip noHover>{this.props.global.say.copy}</Tooltip></i>
                         <i
                           className='fas fa-map-marked-alt'

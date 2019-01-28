@@ -72,7 +72,7 @@ export default class Carousel extends React.Component {
         <div className='list'>
           {this.state.list.map((item, index) => (
             <div className='item' key={item._id}>
-              {item.customIcon && <img className='icon' src={item.customIcon} /> }
+              {item.customIcon && <img className='icon' src={item.customIcon} alt='icon' /> }
               <Pic
                 image={item.image.url}
                 onClick={() => this.setImage(item.image._id, index)}

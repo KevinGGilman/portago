@@ -1,4 +1,3 @@
-export default faClassList
 const faClassList = [
   'abacus',
   'acorn',
@@ -1478,3 +1477,4 @@ const faClassList = [
   'yen-sign',
   'yin-yang'
 ]
+export default faClassList
