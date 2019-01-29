@@ -1,19 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
+import urlapi from 'url'
 /*****************************************************************************
 ----------------------------------Content  ----------------------------------
-1.  functions
-2.  input
-3.  Select
-4.  Dropdown
-5.  Toggle
-6.  ToggleList
-7.  Button
-8.  Output
-9.  Label
-10. Fieldset
-11. Modal
+functions
+Input
+Select
+Dropdown
+Navigation
+Tooltip
+Checkbox
+Toggle
+ToggleList
+RadioGroup
+Button
+Output
+Label
+Tab
+Fieldset
+Modal
 *****************************************************************************/
 
 /*****************************************************************************
@@ -51,7 +57,7 @@ function getData (url) {
     fullUrl = 'http://' + url
   }
   url.includes('facebook') ? obj['image'] = 'images/facebook.jpg' : obj['image'] = 'images/defaultLink.jpg'
-  let host = 'getHost'
+  let host = urlapi.parse(fullUrl).hostname
   obj.title = host
   obj.url = fullUrl
   return obj
@@ -139,9 +145,9 @@ export class Input extends React.Component {
     document.removeEventListener('click', this.closeSelect)
   }
   filterDropdown () {
-    const { value, bottomList, isSearch } = this.props
-    if (!value || !isSearch) return bottomList
+    const { value, bottomList } = this.props
     const lowered = value.toLowerCase()
+    if (!value) return bottomList
     return bottomList.filter(v => v.toLowerCase().includes(lowered))
   }
   componentDidMount () {
@@ -151,16 +157,14 @@ export class Input extends React.Component {
   render () {
     const className = ['input']
     if (this.props.className) className.push(this.props.className)
-    if (this.props.rightList || this.props.linkList || this.props.locationList) {
+    if (this.props.rightList || this.props.onAdd || this.props.linkList || this.props.locationList) {
       className.push('right-list')
     }
     if (this.props.bottomList) className.push('bottom-list')
     return (
       <div className={className.join(' ')}>
-        {this.props.children}
         <input
           ref={(ref) => { this.inputRef = ref }}
-          autoComplete={this.props.autoComplete && this.props.autoComplete}
           type={this.props.type ? this.props.type : 'text'}
           value={this.props.value || this.state.value}
           onChange={(evt) => this.props.onChange
@@ -181,6 +185,7 @@ export class Input extends React.Component {
               if (this.props.linkList) this.linkRequest(this.state.value || this.props.value)
               else if (this.props.locationList) this.setLocation(this.state.value)
               if (this.props.onEnterKey) this.props.onEnterKey()
+            this.props.currency && setCurrency(this.props, evt.target.value)
             }
           }}
           onFocus={() => this.props.bottomList && this.openSelect()}
@@ -190,7 +195,6 @@ export class Input extends React.Component {
           <Select
             value={this.props.rightValue}
             optionList={this.props.rightList}
-            outputList={this.props.outputList}
             onChange={(item) => this.props.onOptionChange(item)}
           />
         }
@@ -207,17 +211,24 @@ export class Input extends React.Component {
             className='far fa-plus select'
           />
         }
-
+        {this.props.children}
         {this.props.onClose &&
           <i
             onClick={() => this.props.onClose()}
             className='far fa-times select'
           />
         }
+        {this.props.onAdd &&
+          <span className='select'>
+            <i
+              onClick={() => this.props.onAdd(this.state.value)}
+              className='far fa-plus'
+            />
+          </span>
+        }
         {this.state.isSelecting &&
           <Dropdown
             optionList={this.filterDropdown()}
-            outputList={this.props.outputList}
             onChange={(value) => this.props.onChange(value)}
           />
         }
@@ -233,18 +244,18 @@ export class Select extends React.Component {
   constructor (props) {
     super(props)
     this.state = { isSelecting: false }
+    this.openSelect = this.openSelect.bind(this)
     this.closeSelect = this.closeSelect.bind(this)
   }
-  openSelect () {
+  openSelect (evt) {
     this.setState({ isSelecting: true })
     document.addEventListener('click', this.closeSelect)
   }
-  closeSelect (e) {
+  closeSelect (evt) {
     this.setState({ isSelecting: false })
     document.removeEventListener('click', this.closeSelect)
   }
   renderValue (value, auto, plural, placeholder) {
-    if (!(value instanceof moment) && typeof value === 'object') return value
     if (!value && value !== 0) return placeholder
     if (value instanceof moment) return value.format('ddd MMM DD')
     if (plural && value > 1) auto = plural
@@ -255,13 +266,16 @@ export class Select extends React.Component {
       <span
         ref={(ref) => { this.selectRef = ref }}
         className={`select ${this.props.className || ''}`}
-        onClick={this.openSelect.bind(this)}>
-        {this.renderValue(
-          this.props.value,
-          this.props.default,
-          this.props.plural,
-          this.props.placeholder
-        )}
+        onClick={this.openSelect}>
+        {typeof this.props.value === 'object' ? this.props.value
+          : this.renderValue(
+            this.props.value,
+            this.props.default,
+            this.props.plural,
+            this.props.placeholder
+          )
+        }
+
         {this.state.isSelecting &&
           <Dropdown {...this.props} />
         }
@@ -381,10 +395,16 @@ export class Dropdown extends React.Component {
     super(props)
     this.state = { isSelecting: false }
     this.getDropdownStyles = this.getDropdownStyles.bind(this)
+    this.renderDropdownContent = this.renderDropdownContent.bind(this)
   }
   componentDidMount () {
-    window.addEventListener('resize', this.getDropdownStyles)
     this.setState({ isStylesUpdated: false })
+    this.dropdownNode = document.createElement('div')
+    document.body.prepend(this.dropdownNode)
+    this.renderDropdownContent()
+  }
+  componentWillReceiveProps (newProps) {
+    this.renderDropdownContent()
   }
   getScrollParents (scrollParents, node) {
     if (node == null) return scrollParents
@@ -400,28 +420,33 @@ export class Dropdown extends React.Component {
       })
       this.getDropdownStyles(dropdownNode)
     }
+    this.renderDropdownContent()
   }
   componentWillUnmount () {
-    window.removeEventListener('resize', this.getDropdownStyles)
     this.scrollNodes.forEach((node) => {
       if (!node) return
       node.removeEventListener('scroll', this.getDropdownStyles)
     })
+    ReactDOM.unmountComponentAtNode(this.dropdownNode)
+    document.body.removeChild(this.dropdownNode)
   }
   getDropdownStyles () {
-    const node = ReactDOM.findDOMNode(this.dropdownRef)
+    const node = ReactDOM.findDOMNode(this.dropdownRef.parentNode)
     let style = {}
     if (node) {
-      const { bottom, top, right, width } = node.parentNode.getBoundingClientRect()
+      const { bottom, top, right, width, left } = node.getBoundingClientRect()
       const fullHeight = window.innerHeight
-      style.right = window.innerWidth - right
+      if (this.props.isSubMenu) style.right = window.innerWidth - left + 25
+      else style.right = window.innerWidth - right
       style.minWidth = width
       if (fullHeight - bottom < fullHeight / 3) {
-        style.bottom = window.innerHeight - top + 5
+        if (this.props.isSubMenu) style.bottom = window.innerHeight - bottom
+        else style.bottom = window.innerHeight - top + 5
         style.maxHeight = top - 20
         style.flexDirection = 'column-reverse'
       } else {
-        style.top = bottom + 5
+        if (this.props.isSubMenu) style.top = top
+        else style.top = bottom + 5
         style.maxHeight = window.innerHeight - bottom - 20
       }
     }
@@ -432,28 +457,23 @@ export class Dropdown extends React.Component {
     return `${value} ${auto || ''}`
   }
   render () {
-    return (
+    return <div ref={(ref) => { this.dropdownRef = ref }} />
+  }
+  renderDropdownContent () {
+    ReactDOM.render(
       <div
-        className={`dropdown ${this.props.dropdownClass || ''}`}
+        className={`${this.props.dropdownClass || ''} dropdown`}
         style={this.state.style}
-        ref={(ref) => { this.dropdownRef = ref }}
       >
         {this.props.optionList.map((value, index) => (
           <span
             key={index}
             onClick={() => this.props.onChange(value, index)}
           >
-            {this.props.outputList && this.props.outputList[index]}
-            {!this.props.outputList && (((isNaN(value) || value instanceof moment) && this.props.default)
-              ? <React.Fragment>
-                <span>{this.renderValue(index + 1, this.props.default, this.props.plural)}</span>
-                <span>{value instanceof moment ? value.format('ddd MMM DD') : value}</span>
-              </React.Fragment>
-              : this.renderValue(value, this.props.default, this.props.plural)
-            )}
+            {this.props.outputList[index]}
           </span>
         ))}
-      </div>
+      </div>, this.dropdownNode
     )
   }
 }
@@ -471,14 +491,13 @@ class DropdownDate extends Dropdown {
           onClick={() => this.props.onMonthChange('Today')}
         >Today
         </span>
-        {moment.monthsShort().slice(0).reverse().map((month, index) => {
-          const longMonth = moment(month, 'MMM').format('MMM')
+        {moment.monthsShort().slice(0).map((month, index) => {
+          month = moment(month, 'MMM')
           return (
             <span
-              onMouseEnter={() => this.props.setState({ monthHover: longMonth })}
-              onMouseLeave={() => this.props.setState({ monthHover: false })}
-              onClick={() => this.props.onMonthChange(longMonth)}
-              key={index}>{longMonth}
+              key={index}
+              onClick={() => this.props.onMonthChange(month.format('MMM'))}
+            >{month.format('MMMM')}
             </span>
           )
         })}
@@ -568,57 +587,6 @@ export class DropdownNav extends Dropdown {
   }
 }
 /*****************************************************************************
-Toggle
-*****************************************************************************/
-export const Toggle = (props) => (
-  <span
-    className={`toggle ${props.value && 'clicked'} ${props.className || ''}`}
-    onClick={() => props.onChange(!props.value)}
-  >
-    {props.name}
-  </span>
-)
-
-/*****************************************************************************
-ToggleList
-*****************************************************************************/
-export class ToggleGroup extends React.Component {
-  constructor (props) {
-    super(props)
-    const value = typeof this.props.defaultValue === 'object'
-      ? this.props.defaultValue : [this.props.defaultValue]
-    this.state = { valueList: this.props.defaultValue ? value : [] }
-  }
-  setList (isClicked, option) {
-    let { valueList } = this.state
-    if (isClicked) valueList.push(option)
-    else valueList.splice(valueList.indexOf(option), 1)
-    this.setState({ valueList })
-    this.props.onChange(valueList)
-  }
-  setItem (isClicked, option) {
-    this.setState({ valueList: [option] })
-    this.props.onChange(isClicked ? option : '')
-  }
-  render () {
-    return (
-      <div className={`toggle-group ${this.props.className || ''}`}>
-        {this.props.optionList.map((option, index) => (
-          <Toggle
-            key={index}
-            name={option}
-            value={this.state.valueList.includes(option)}
-            onChange={(value) => {
-              this.props.isOne ? this.setItem(value, option)
-                : this.setList(value, option)
-            }} />
-        ))}
-      </div>
-    )
-  }
-}
-
-/*****************************************************************************
 Tooltip
 *****************************************************************************/
 export class Tooltip extends React.Component {
@@ -637,8 +605,7 @@ export class Tooltip extends React.Component {
     this.tooltipRef.parentNode.removeEventListener('mouseenter', this.toggleTooltip)
     this.tooltipRef.parentNode.removeEventListener('mouseleave', this.toggleTooltip)
   }
-  toggleTooltip (evt) {
-    this.setPosition()
+  toggleTooltip () {
     this.setState({ isActive: !this.state.isActive })
   }
   setPosition () {
@@ -691,7 +658,74 @@ export class Tooltip extends React.Component {
   }
 }
 /*****************************************************************************
-ToggleGroup
+Checkbox
+*****************************************************************************/
+export const Checkbox = (props) => (
+  <i
+    className={`
+      checkbox
+      ${props.value && 'clicked'}
+      ${props.className || ''}
+      far fa-check
+    `}
+    onClick={() => props.onChange(!props.value)}
+  >
+    {props.name || ''}
+  </i>
+)
+/*****************************************************************************
+Toggle
+*****************************************************************************/
+export const Toggle = (props) => (
+  <span
+    className={`toggle ${props.value && 'clicked'} ${props.className || ''}`}
+    onClick={() => props.onChange(!props.value)}
+  >
+    <i className={`far fa-${props.value ? 'check-' : ''}circle`} />{props.name}
+  </span>
+)
+
+/*****************************************************************************
+ToggleList
+*****************************************************************************/
+export class ToggleGroup extends React.Component {
+  constructor (props) {
+    super(props)
+    const value = typeof this.props.defaultValue === 'object'
+      ? this.props.defaultValue : [this.props.defaultValue]
+    this.state = { valueList: this.props.defaultValue ? value : [] }
+  }
+  setList (isClicked, option) {
+    let { valueList } = this.state
+    if (isClicked) valueList.push(option)
+    else valueList.splice(valueList.indexOf(option), 1)
+    this.setState({ valueList })
+    this.props.onChange(valueList)
+  }
+  setItem (isClicked, option) {
+    this.setState({ valueList: [option] })
+    this.props.onChange(isClicked ? option : '')
+  }
+  render () {
+    return (
+      <div className={`toggle-group ${this.props.className || ''}`}>
+        {this.props.optionList.map((option, index) => (
+          <Toggle
+            key={index}
+            name={option}
+            value={this.state.valueList.includes(option)}
+            onChange={(value) => {
+              this.props.isOne ? this.setItem(value, option)
+                : this.setList(value, option)
+            }} />
+        ))}
+      </div>
+    )
+  }
+}
+
+/*****************************************************************************
+RadioGroup
 *****************************************************************************/
 export const RadioGroup = (props) => (
   <>
@@ -733,11 +767,11 @@ export const Output = (props) => (
   <div className={`output ${props.className || ''}`}>
     {props.value && <span>{props.value}</span>}
     {props.valueList &&
-      <React.Fragment>
+      <>
         {props.valueList.map((value, index) => (
           <span key={index}>{value}</span>
         ))}
-      </React.Fragment>
+      </>
     }
   </div>
 )
@@ -760,7 +794,7 @@ export const Tab = (props) => (
         className={`${props.value === value ? 'active' : ''} ${props.className || ''}`}
         onClick={() => props.onChange(value)}
       >
-        {props.outputList[index]}
+        {props.outputList ? props.outputList[index] : value}
       </span>
     ))}
     {props.children}
@@ -825,7 +859,7 @@ class ModalContainer extends React.Component {
     e.stopPropagation()
   }
   handleClickOutside () {
-    this.props.closeModal && this.props.closeModal()
+    if (this.props.closeModal) this.props.closeModal()
   }
   renderModalContent (props) {
     ReactDOM.render(
