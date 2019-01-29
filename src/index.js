@@ -10,8 +10,7 @@ import { config } from './text/config'
 class App extends React.Component {
   constructor (props) {
     super(props)
-    const isDev = actions.isDev()
-    const socket = actions.setSocket(isDev)
+    const socket = actions.setSocket(actions.isDev())
     const lang = navigator.language || navigator.userLanguage
     this.state = {
       socket,
