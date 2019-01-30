@@ -14,7 +14,7 @@ export default class Login extends React.Component {
     }, (err, result) => {
       if (err) console.log(err)
       else {
-        document.cookie = `session=${result._id}`
+        document.cookie = `session=${result._id};path=/;`
         window.location.reload(false)
       }
     })

@@ -36,9 +36,9 @@ class App extends React.Component {
     window.addEventListener('drop', (evt) => evt.preventDefault())
     window.addEventListener('resize', () => this.forceUpdate())
     this.refresh()
-    socket.emit('users/self', { date: new Date() }, (err, result) => {
-      if (err) this.setState({ user: null })
-      else this.setState({ user: result })
+    socket.on('users/self', (user) => {
+      if (!user) this.setState({ user: null })
+      else this.setState({ user: user })
     })
     this.onChange([
       { key: 'carousel', url: 'carousel/list' },
