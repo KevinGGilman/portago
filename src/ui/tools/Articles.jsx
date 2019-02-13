@@ -14,13 +14,19 @@ export default class Articles extends React.Component {
     this.addImage = this.addImage.bind(this)
     this.setItem = this.setItem.bind(this)
     this.doAfterSilence = this.props.global.do.doAfterSilence.bind(this)
+    this.removeImage = this.removeImage.bind(this)
+  }
+
+  removeImage (_id) {
+    this.props.global.socket.emit('files/remove', { _id, collection: 'articles' })
   }
   async replaceImage (_id, imageIndex, index) {
     this.chooseFile('image', false, (file) => {
+      file.urlShort = resizebase64(file.url, 200, 200)
+      file.url = resizebase64(file.url, 1920, 1080)
       const image = {
         ...file,
         _id,
-        urlShort: resizebase64(file.url, 200, 200),
         collection: 'articles'
       }
       const list = this.state.list
@@ -35,6 +41,7 @@ export default class Articles extends React.Component {
     const list = this.state.list
     this.chooseFile('image', false, (file) => {
       file.urlShort = resizebase64(file.url, 200, 200)
+      file.url = resizebase64(file.url, 1920, 1080)
       list[index].imageList.push(file)
       this.setState({ list })
       const query = {
@@ -48,17 +55,17 @@ export default class Articles extends React.Component {
     })
   }
   componentWillReceiveProps (newProps) {
-    if (this.props.global[`${this.props.type}List`].length !== newProps.global[`${this.props.type}List`].length) {
-      this.setState({list: newProps.global[`${this.props.type}List`]})
-    }
+    this.setState({list: newProps.global[`${this.props.type}List`]})
   }
-  setImage (item, index) {
+  onImageReorder (item, imageList, index) {
+    const query = {
+      _id: item._id,
+      imageList: imageList.map(obj => obj._id)
+    }
     const list = this.state.list
-    list[index] = item
+    list[index] = { ...item, imageList }
     this.setState({ list })
-    this.props.global.socket.emit('articles/edit', item, (err, result) => {
-      if (err) console.log(err)
-    })
+    this.props.global.socket.emit('articles/reorder/imageList', query)
   }
   addArticle () {
     const query = { type: this.props.type }
@@ -116,10 +123,12 @@ export default class Articles extends React.Component {
 
               <div className='text'>
                 <ImageManager
+                  global={this.props.global}
                   list={item.imageList}
-                  onChange={(imageList) => this.setImage({ ...item, imageList }, index)}
+                  onChange={(imageList) => this.onImageReorder(item, imageList, index)}
                   onSet={(_id, imgIndex) => this.replaceImage(_id, imgIndex, index)}
                   onAdd={() => this.addImage(index)}
+                  onRemove={(_id) => this.removeImage(_id)}
                 />
                 <Input
                   value={item[this.state.lang].name}

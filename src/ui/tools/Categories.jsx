@@ -15,16 +15,15 @@ export default class Categories extends React.Component {
     this.doAfterSilence = this.props.global.do.doAfterSilence.bind(this)
   }
   componentWillReceiveProps (newProps) {
-    if (this.props.global.categoryList.length !== newProps.global.categoryList.length) {
-      this.setState({ list: newProps.global.categoryList })
-    }
+    this.setState({ list: newProps.global.categoryList })
   }
   async setImage (_id, index) {
     this.chooseFile('image', false, (file) => {
+      file.urlShort = resizebase64(file.url, 200, 200)
+      file.url = resizebase64(file.url, 1920, 1080)
       const image = {
         ...file,
         _id,
-        urlShort: resizebase64(file.url, 200, 200),
         collection: 'categories'
       }
       const list = this.state.list
@@ -38,8 +37,9 @@ export default class Categories extends React.Component {
   }
   async addItem () {
     this.chooseFile('image', false, (file) => {
+      file.urlShort = resizebase64(file.url, 200, 200)
+      file.url = resizebase64(file.url, 1920, 1080)
       const item = { image: file }
-      item.image.urlShort = resizebase64(item.image.url, 200, 200)
       this.props.global.socket.emit('categories/insert', item, (err, result) => {
         if (err) return
         const list = [...this.state.list, result]
@@ -73,7 +73,8 @@ export default class Categories extends React.Component {
           {this.state.list.map((item, index) => (
             <div className='item' key={item._id}>
               <Pic
-                image={item.image.url}
+                global={this.props.global}
+                image={item.image}
                 onClick={() => this.setImage(item.image._id, index)}
               />
               <div className='text'>

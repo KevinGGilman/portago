@@ -35,7 +35,7 @@ export const OptionList = (props) => {
             onClick={() => props.onClick(item)}
           >
             <Pic
-              image={(item.image || ((item.imageList || [])[0]) || {}).url}>
+              image={(item.image || ((item.imageList || [])[0]) || {})}>
               {props.title && <p>{props.title(item)}</p>}
               {props.badge && <span>{props.badge(item)}</span>}
             </Pic>

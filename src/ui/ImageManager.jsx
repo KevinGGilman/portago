@@ -8,6 +8,19 @@ export default class Images extends React.Component {
     this.onDragOver = this.onDragOver.bind(this)
     this.onDragEnd = this.onDragEnd.bind(this)
     this.onDrop = this.onDrop.bind(this)
+    this.state = { list: props.list }
+    this.state.list.forEach((_id, index) => typeof _id !== 'object' && this.getImage(_id, index))
+  }
+  getImage (_id, index) {
+    this.props.global.socket.emit('files/url/short', { _id }, (err, result) => {
+      if (err) console.log(err)
+      const { list } = this.state
+      list[index] = { _id, url: result }
+      this.setState({ list })
+    })    
+  }
+  componentWillReceiveProps (newProps) {
+    newProps.list.forEach((_id, index) => typeof _id !== 'object' && this.getImage(_id, index))
   }
   onDragStart (evt, index) {
     this.hasDropped = false
@@ -35,6 +48,7 @@ export default class Images extends React.Component {
     this.item.insertAdjacentElement('afterend', this.placeholder)
   }
   getItem (node) {
+    if(!node) return null
     if (['images', 'placeholder'].includes(node.className)) return null
     else if (node.className !== 'image-item') return this.getItem(node.parentNode)
     else return node
@@ -50,7 +64,8 @@ export default class Images extends React.Component {
         const items = this.reorder(this.props.list, draggedIndex, droppedIndex)
         this.props.onChange(items)
       } else {
-        const list = this.props.list
+        const list = this.state.list
+        this.props.onRemove(this.state.list[draggedIndex]._id)
         list.splice(draggedIndex, 1)
         this.props.onChange(list)
       }
@@ -77,7 +92,7 @@ export default class Images extends React.Component {
         onDragOver={this.onDragOver}
         onDrop={this.onDrop}
       >
-        {this.props.list.map((obj, index) => {
+        {this.state.list.map((obj, index) => {
           return (
             <div
               draggable
@@ -87,11 +102,7 @@ export default class Images extends React.Component {
               onDragEnd={this.onDragEnd}
               onDragStart={(evt) => this.onDragStart(evt, index)}
             >
-              <img
-                className={obj.type.replace('image/', '').replace('+xml', '')}
-                src={obj.url}
-                alt={obj.name.split('.')[0]}
-              />
+            <img src={obj.url} />
             </div>
           )
         })}

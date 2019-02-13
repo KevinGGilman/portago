@@ -15,29 +15,30 @@ export default class Carousel extends React.Component {
   }
   setImage (_id, index) {
     this.chooseFile('image', false, (file) => {
+      file.urlShort = resizebase64(file.url, 200, 200)
       file.url = resizebase64(file.url, 1920, 1080)
       const image = { ...file, _id, collection: 'carousel' }
       const list = this.state.list
       list[index] = { ...list[index], image }
       this.setState({ list })
-      this.props.global.socket.emit('files/set/image', image, (err, result) => {
+      this.props.global.socket.emit('files/set/image', image, (err) => {
         if (err) console.log(err)
         this.props.global.setState({ isHoverLoading: false })
       })
     })
   }
   componentWillReceiveProps (newProps) {
-    if (this.props.global.carousel.length !== newProps.global.carousel.length) {
-      this.setState({ list: newProps.global.carousel })
-    }
+    this.setState({ list: newProps.global.carousel })
   }
   addImage () {
     this.chooseFile('image', false, (file) => {
+      file.urlShort = resizebase64(file.url, 200, 200)
       file.url = resizebase64(file.url, 1920, 1080)
       const item = { image: file }
       this.props.global.socket.emit('carousel/insert', item, (err, result) => {
         if (err) return
         this.props.global.setState({ isHoverLoading: false })
+        console.log(result)
         const list = [...this.state.list, {
           ...result,
           fr: { title: '', description: '' },
@@ -91,8 +92,9 @@ export default class Carousel extends React.Component {
             <div className='item' key={item._id}>
               {item.customIcon && <img className='icon' src={item.customIcon} alt='icon' /> }
               <Pic
-                image={item.image.url}
-                onClick={() => this.setImage(item.image._id, index)}
+                global={this.props.global}
+                image={item.image}
+                onClick={() => this.setImage(item.image, index)}
               />
               <div className='text'>
                 <Input
