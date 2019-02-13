@@ -35,7 +35,11 @@ export default class About extends React.Component {
     this.forceUpdate()
     this.props.global.socket.emit('posts/remove', { _id: item._id })
   }
-
+  componentWillReceiveProps (newProps) {
+    if (this.props.global.postList.length !== newProps.global.postList.length) {
+      this.setState({list: newProps.global.postList})
+    }
+  }
   swap (index, count) {
     let list = this.state.list;
     [list[index], list[index + count]] = [list[index + count], list[index]]

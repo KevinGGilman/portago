@@ -1,6 +1,7 @@
 import React from 'react'
 import { Pic } from '../Pic'
 import { Input, Button, Tab } from '../Form'
+import resizebase64 from 'resize-base64'
 export default class Carousel extends React.Component {
   constructor (props) {
     super(props)
@@ -14,6 +15,7 @@ export default class Carousel extends React.Component {
   }
   setImage (_id, index) {
     this.chooseFile('image', false, (file) => {
+      file.url = resizebase64(file.url, 1920, 1080)
       const image = { ...file, _id, collection: 'carousel' }
       const list = this.state.list
       list[index] = { ...list[index], image }
@@ -24,8 +26,14 @@ export default class Carousel extends React.Component {
       })
     })
   }
+  componentWillReceiveProps (newProps) {
+    if (this.props.global.carousel.length !== newProps.global.carousel.length) {
+      this.setState({ list: newProps.global.carousel })
+    }
+  }
   addImage () {
     this.chooseFile('image', false, (file) => {
+      file.url = resizebase64(file.url, 1920, 1080)
       const item = { image: file }
       this.props.global.socket.emit('carousel/insert', item, (err, result) => {
         if (err) return

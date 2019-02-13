@@ -8,7 +8,6 @@ export default function onChange (keyList) {
         console.log(result)
         if (err) console.log(err)
         global.setState({ [obj.key]: result })
-        window.localStorage.setItem(obj.key, JSON.stringify(result))
       })
     })
   })

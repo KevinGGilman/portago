@@ -10,6 +10,11 @@ export default class Carousel extends React.Component {
     this.setItem = this.setItem.bind(this)
     this.doAfterSilence = this.props.global.do.doAfterSilence.bind(this)
   }
+  componentWillReceiveProps (newProps) {
+    if (this.props.global.locationList.length !== newProps.global.locationList.length) {
+      this.setState({ list: newProps.global.locationList })
+    }
+  }
   addLocation () {
     this.props.global.socket.emit('locations/insert', {}, (err, result) => {
       if (err) return

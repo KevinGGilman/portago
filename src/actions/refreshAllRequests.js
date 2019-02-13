@@ -19,13 +19,9 @@ export default function refreshAllRequests (isRefreshUser, globalCallback) {
   }
   const preState = (state) => {
     stateAccumulator = { ...stateAccumulator, ...state }
-    Object.keys(state).forEach(key => {
-      window.localStorage.setItem(key, JSON.stringify(state[key]))
-    })
   }
 
   if (isRefreshUser) get('users/self', {}, (obj) => preState({ user: obj }))
-
   get('carousel/list', {}, (arr) => preState({ carousel: arr }))
   get('locations/list', {}, (arr) => preState({ locationList: arr }))
   get('posts/list', {}, (arr) => preState({ postList: arr }))

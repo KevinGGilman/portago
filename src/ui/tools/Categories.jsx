@@ -14,6 +14,11 @@ export default class Categories extends React.Component {
     this.setImage = this.setImage.bind(this)
     this.doAfterSilence = this.props.global.do.doAfterSilence.bind(this)
   }
+  componentWillReceiveProps (newProps) {
+    if (this.props.global.categoryList.length !== newProps.global.categoryList.length) {
+      this.setState({ list: newProps.global.categoryList })
+    }
+  }
   async setImage (_id, index) {
     this.chooseFile('image', false, (file) => {
       const image = {

@@ -47,6 +47,11 @@ export default class Articles extends React.Component {
       })
     })
   }
+  componentWillReceiveProps (newProps) {
+    if (this.props.global[`${this.props.type}List`].length !== newProps.global[`${this.props.type}List`].length) {
+      this.setState({list: newProps.global[`${this.props.type}List`]})
+    }
+  }
   setImage (item, index) {
     const list = this.state.list
     list[index] = item
