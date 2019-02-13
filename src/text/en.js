@@ -46,7 +46,8 @@ export const en = {
   straw: 'Straw',
   quantityPlaceholder: 'Select a quantity',
   brush: 'Brush',
-  category: 'Categories',
+  category: 'Pocket categories',
   style: 'Style',
-  Quantity: 'Qunatity'
+  Quantity: 'Quantity',
+  cart: 'Cart'
 }

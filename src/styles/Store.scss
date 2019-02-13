@@ -26,6 +26,7 @@
       }
     }
     .step-item {
+      @include no-select;
       @include center;
       i {
         margin-left: 10px;
@@ -33,6 +34,9 @@
       }
       i, span {
         color: $gray70;
+      }
+      &:hover *{
+        color: $gray50;
       }
       &.active * {
         color: $gray30;

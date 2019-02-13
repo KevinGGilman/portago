@@ -15,25 +15,32 @@ export default class Categories extends React.Component {
     this.doAfterSilence = this.props.global.do.doAfterSilence.bind(this)
   }
   async setImage (_id, index) {
-    const file = await this.chooseFile('image')
-    const image = { ...file, _id, urlShort: resizebase64(file.url, 200, 200) }
-    const list = this.state.list
-    list[index] = { ...list[index], image }
-    this.setState({ list })
-    this.props.global.socket.emit('files/set/image', image, (err, result) => {
-      if (err) return
-      const list = [...this.state.list, result]
+    this.chooseFile('image', false, (file) => {
+      const image = {
+        ...file,
+        _id,
+        urlShort: resizebase64(file.url, 200, 200),
+        collection: 'categories'
+      }
+      const list = this.state.list
+      list[index] = { ...list[index], image }
       this.setState({ list })
+      this.props.global.socket.emit('files/set/image', image, (err, result) => {
+        if (err) console.log(err)
+        this.props.global.setState({ isHoverLoading: false })
+      })
     })
   }
   async addItem () {
-    const file = await this.chooseFile('image')
-    const item = { image: file }
-    item.image.urlShort = resizebase64(item.image.url, 200, 200)
-    this.props.global.socket.emit('categories/insert', item, (err, result) => {
-      if (err) return
-      const list = [...this.state.list, result]
-      this.setState({ list })
+    this.chooseFile('image', false, (file) => {
+      const item = { image: file }
+      item.image.urlShort = resizebase64(item.image.url, 200, 200)
+      this.props.global.socket.emit('categories/insert', item, (err, result) => {
+        if (err) return
+        const list = [...this.state.list, result]
+        this.setState({ list })
+        this.props.global.setState({ isHoverLoading: false })
+      })
     })
   }
   delete (item, index) {

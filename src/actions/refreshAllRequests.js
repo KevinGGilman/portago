@@ -1,6 +1,6 @@
 export default function refreshAllRequests (isRefreshUser, globalCallback) {
   const global = this.props.global || this.state
-  let stateAccumulator = { }
+  let stateAccumulator = { isLoading: false }
   let total = 0
   let count = 0
 

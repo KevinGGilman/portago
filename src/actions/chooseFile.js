@@ -1,5 +1,5 @@
 
-export default function chooseFile (type, isMultiple) {
+export default function chooseFile (type, isMultiple, callback) {
   const accept = type.includes('image') ? 'image/*' : 'file'
   this.fileSelector = document.createElement('input')
   this.fileSelector.setAttribute('type', 'file')
@@ -8,11 +8,10 @@ export default function chooseFile (type, isMultiple) {
   this.fileSelector.click()
   this.action = isMultiple ? pushFiles : setFile
   this.action = this.action.bind(this)
-  return new Promise(async (resolve) => {
-    this.fileSelector.addEventListener('change', async (evt) => {
-      const file = await this.action(evt, type)
-      resolve(file)
-    })
+  this.fileSelector.addEventListener('change', async (evt) => {
+    this.props.global.setState({ isHoverLoading: true })
+    const file = await this.action(evt, type)
+    callback(file)
   })
 }
 

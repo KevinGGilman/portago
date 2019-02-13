@@ -8,9 +8,7 @@ export const Pic = (props) => {
     >
       {props.count && <div className='count'>+{props.count - 1}</div>}
       {props.onClick && <div><i className='fas fa-camera' /></div>}
-      <div>
-        {props.children}
-      </div>
+      {props.children && <div>{props.children}</div>}
     </div>
   )
 }

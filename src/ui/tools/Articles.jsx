@@ -16,25 +16,35 @@ export default class Articles extends React.Component {
     this.doAfterSilence = this.props.global.do.doAfterSilence.bind(this)
   }
   async replaceImage (_id, imageIndex, index) {
-    const file = await this.chooseFile('image')
-    const image = { ...file, _id, urlShort: resizebase64(file.url, 200, 200) }
-    const list = this.state.list
-    list[index].imageList[imageIndex] = image
-    this.setState({ list })
-    this.props.global.socket.emit('files/set/image', image)
+    this.chooseFile('image', false, (file) => {
+      const image = {
+        ...file,
+        _id,
+        urlShort: resizebase64(file.url, 200, 200),
+        collection: 'articles'
+      }
+      const list = this.state.list
+      list[index].imageList[imageIndex] = image
+      this.setState({ list })
+      this.props.global.socket.emit('files/set/image', image, () => {
+        this.props.global.setState({ isHoverLoading: false })
+      })
+    })
   }
   async addImage (index) {
     const list = this.state.list
-    const file = await this.chooseFile('image')
-    file.urlShort = resizebase64(file.url, 200, 200)
-    list[index].imageList.push(file)
-    this.setState({ list })
-    const query = {
-      _id: list[index]._id,
-      image: file
-    }
-    this.props.global.socket.emit('articles/push/image', query, (err, result) => {
-      if (err) console.log(err)
+    this.chooseFile('image', false, (file) => {
+      file.urlShort = resizebase64(file.url, 200, 200)
+      list[index].imageList.push(file)
+      this.setState({ list })
+      const query = {
+        _id: list[index]._id,
+        image: file,
+      }
+      this.props.global.socket.emit('articles/push/image', query, (err, result) => {
+        if (err) console.log(err)
+        this.props.global.setState({ isHoverLoading: false })
+      })
     })
   }
   setImage (item, index) {
@@ -45,7 +55,7 @@ export default class Articles extends React.Component {
       if (err) console.log(err)
     })
   }
-  addArticle (type) {
+  addArticle () {
     const query = { type: this.props.type }
     this.props.global.socket.emit('articles/insert', query, (err, result) => {
       if (err) return
@@ -123,7 +133,7 @@ export default class Articles extends React.Component {
                 />
                 { this.props.type === 'pocket' &&
                   <Select
-                    value={item.category ? this.props.global.categoryMap[item.category][this.state.lang] : ''}
+                    value={item.category ? (this.props.global.categoryMap[item.category] || {})[this.state.lang] : ''}
                     placeholder={this.props.global.say.categoryPlaceholder}
                     optionList={this.props.global.categoryList.map(obj => obj._id)}
                     outputList={this.props.global.categoryList.map(obj => obj[this.state.lang])}

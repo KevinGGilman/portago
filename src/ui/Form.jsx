@@ -163,6 +163,7 @@ export class Input extends React.Component {
     if (this.props.bottomList) className.push('bottom-list')
     return (
       <div className={className.join(' ')}>
+        {this.props.children}
         <input
           ref={(ref) => { this.inputRef = ref }}
           type={this.props.type ? this.props.type : 'text'}
@@ -185,7 +186,7 @@ export class Input extends React.Component {
               if (this.props.linkList) this.linkRequest(this.state.value || this.props.value)
               else if (this.props.locationList) this.setLocation(this.state.value)
               if (this.props.onEnterKey) this.props.onEnterKey()
-            this.props.currency && setCurrency(this.props, evt.target.value)
+              this.props.currency && setCurrency(this.props, evt.target.value)
             }
           }}
           onFocus={() => this.props.bottomList && this.openSelect()}
@@ -211,7 +212,6 @@ export class Input extends React.Component {
             className='far fa-plus select'
           />
         }
-        {this.props.children}
         {this.props.onClose &&
           <i
             onClick={() => this.props.onClose()}
@@ -470,7 +470,7 @@ export class Dropdown extends React.Component {
             key={index}
             onClick={() => this.props.onChange(value, index)}
           >
-            {this.props.outputList[index]}
+            {this.props.outputList ? this.props.outputList[index] : value}
           </span>
         ))}
       </div>, this.dropdownNode

@@ -12,23 +12,32 @@ export default class Carousel extends React.Component {
     this.setItem = this.setItem.bind(this)
     this.doAfterSilence = this.props.global.do.doAfterSilence.bind(this)
   }
-  async setImage (_id, index) {
-    const file = await this.chooseFile('image')
-    const image = { ...file, _id }
-    const list = this.state.list
-    list[index] = { ...list[index], image }
-    this.setState({ list })
-    this.props.global.socket.emit('files/set/image', image, (err, result) => {
-      if (err) console.log(err)
+  setImage (_id, index) {
+    this.chooseFile('image', false, (file) => {
+      const image = { ...file, _id, collection: 'carousel' }
+      const list = this.state.list
+      list[index] = { ...list[index], image }
+      this.setState({ list })
+      this.props.global.socket.emit('files/set/image', image, (err, result) => {
+        if (err) console.log(err)
+        this.props.global.setState({ isHoverLoading: false })
+      })
     })
   }
-  async addImage (type) {
-    const file = await this.chooseFile(type)
-    const item = { image: file }
-    this.props.global.socket.emit('carousel/insert', item, (err, result) => {
-      if (err) return
-      const list = [...this.state.list, result]
-      this.setState({ list })
+  addImage () {
+    this.chooseFile('image', false, (file) => {
+      const item = { image: file }
+      this.props.global.socket.emit('carousel/insert', item, (err, result) => {
+        if (err) return
+        this.props.global.setState({ isHoverLoading: false })
+        const list = [...this.state.list, {
+          ...result,
+          fr: { title: '', description: '' },
+          en: { title: '', description: '' },
+          faType: 'Solid'
+        }]
+        this.setState({ list })
+      })
     })
   }
   delete (item, index) {
@@ -111,7 +120,7 @@ export default class Carousel extends React.Component {
             </div>
           ))}
         </div>
-        <div className='add button' onClick={() => this.addImage('image')}>
+        <div className='add button' onClick={() => this.addImage()}>
           <i className='far fa-plus' />{this.props.global.say.addImage}
         </div>
       </div>

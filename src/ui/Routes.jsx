@@ -36,7 +36,8 @@ export class Routes extends React.Component {
     const ActiveModal = modalMap[global.modal]
     const isLogin = window.location.pathname.includes('login')
     const isSettings = window.location.pathname.includes('setting')
-    if (this.props.global.user === undefined) {
+    const isTool = window.location.pathname.includes('settings')
+    if (this.props.global.user === undefined || (this.props.isLoading && isTool)) {
       return (
         <div className='carousel'>
           <div className='container'>
@@ -53,6 +54,7 @@ export class Routes extends React.Component {
         {ActiveModal && <ActiveModal global={global} {...global.modalProps} />}
         {!isSettings && !isLogin && <TopNav global={global} />}
         {global.user && isSettings && <SideNav global={global} />}
+        {global.isHoverLoading && isTool && <div className='loading'><i className='far fa-spinner' /></div>}
         <Switch>
           <PublicRoute path='/login' component={Login} global={global} />
           <PrivateRoute path='/settings/carousel' component={CarouselTool} global={global} />

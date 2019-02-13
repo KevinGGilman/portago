@@ -15,6 +15,7 @@ class App extends React.Component {
     this.state = {
       socket,
       config,
+      isLoading: true,
       do: actions,
       ...actions.getLocalData([
         'carousel',
@@ -24,7 +25,7 @@ class App extends React.Component {
         'strawList',
         'brushList',
         'categoryList'
-      ]),
+      ], actions.listToMap),
       user: undefined,
       lang: lang.includes('en') ? 'en' : 'fr',
       say: lang.includes('en') ? en : fr,
@@ -35,18 +36,18 @@ class App extends React.Component {
     window.addEventListener('dragover', (evt) => evt.preventDefault())
     window.addEventListener('drop', (evt) => evt.preventDefault())
     window.addEventListener('resize', () => this.forceUpdate())
-    this.refresh()
     socket.on('users/self', (user) => {
       if (!user) this.setState({ user: null })
       else this.setState({ user: user })
+      this.refresh()
     })
     this.onChange([
       { key: 'carousel', url: 'carousel/list' },
       { key: 'locationList', url: 'locations/list' },
       { key: 'postList', url: 'posts/list' },
-      { key: 'pocketList', url: 'pockets/list' },
-      { key: 'strawList', url: 'straws/list' },
-      { key: 'brushList', url: 'brushes/list' },
+      { key: 'pocketList', url: 'articles/list' },
+      { key: 'strawList', url: 'articles/list' },
+      { key: 'brushList', url: 'articles/list' },
       { key: 'categoryList', url: 'categories/list' }
     ])
   }

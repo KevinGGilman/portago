@@ -2,12 +2,14 @@ import React from 'react'
 
 import { StepGroup } from './StepGroup'
 import { OptionList } from './OptionList'
+import { Cart } from './Cart'
 
 export default class Store extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      step: 'category',
+      step: 'pocket',
+      pocketStep: 'category',
       category: '',
       pocket: '',
       selectedPocketList: [],
@@ -40,21 +42,20 @@ export default class Store extends React.Component {
         <StepGroup
           global={this.props.global}
           value={this.state.step}
-          stepList={['category', 'pocket', 'straw', 'brush']}
-          onBack={(step) => this.setState({ step })}
-          onSkip={(step) => this.setState({ step })}
+          stepList={['pocket', 'straw', 'brush']}
+          onChange={(step) => this.setState({ step })}
         />
         <OptionList
-          onClick={(item) => this.setState({ step: 'pocket', category: item })}
+          onClick={(item) => this.setState({ pocketStep: 'items', category: item })}
           title={(item) => item[this.props.global.lang]}
-          isOpen={this.state.step === 'category'}
+          isOpen={this.state.step === 'pocket' && this.state.pocketStep === 'category'}
           list={this.props.global.categoryList}
         />
         <OptionList
-          onBack={() => this.setState({ step: 'category', category: undefined })}
+          onBack={() => this.setState({ pocketStep: 'category', category: undefined })}
           onNext={(step) => this.setState({ step: 'straw' })}
           onClick={(item) => this.props.global.setState({ modal: 'Article', modalProps: item })}
-          isOpen={this.state.step === 'pocket'}
+          isOpen={this.state.step === 'pocket' && this.state.pocketStep === 'items'}
           title={(item) => item[this.props.global.lang].name}
           badge={(item) => `${item.count} ${this.props.global.say.stock}`}
           list={this.filterArticleList()}
@@ -63,6 +64,7 @@ export default class Store extends React.Component {
           selectedList={this.state.selectedPocketList}
         />
         <OptionList
+          onBack={(step) => this.setState({ step: 'pocket' })}
           onNext={(step) => this.setState({ step: 'brush' })}
           onClick={(item) => this.props.global.setState({ modal: 'Article', modalProps: item })}
           isOpen={this.state.step === 'straw'}
@@ -74,6 +76,7 @@ export default class Store extends React.Component {
           selectedList={this.state.selectedStrawList}
         />
         <OptionList
+          onBack={(step) => this.setState({ step: 'straw' })}
           onNext={(step) => this.setState({ step: 'brush' })}
           onClick={(item) => this.props.global.setState({ modal: 'Article', modalProps: item })}
           isOpen={this.state.step === 'brush'}
@@ -84,6 +87,7 @@ export default class Store extends React.Component {
           onMinus={(item, index) => this.increment(item, 'selectedBrushList', index, -1)}
           selectedList={this.state.selectedBrushList}
         />
+        <Cart {...this.state} global={this.props.global} />
       </div>
     )
   }

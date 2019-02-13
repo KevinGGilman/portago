@@ -32,7 +32,7 @@ export const fr = {
   seeInMaps: 'Voir dans Google Maps',
   copy: 'Copier',
   articles: 'Articles',
-  categories: 'Catégories',
+  categories: 'Catégories de pochettes',
   allModels: 'Tous les modèles',
   back: 'Retour',
   next: 'Suivant',
@@ -47,6 +47,6 @@ export const fr = {
   Quantity: 'Qunatité',
   straw: 'Paille',
   brush: 'Brosse',
-
-  quantityPlaceholder: 'Sélectionnez une quantité'
+  quantityPlaceholder: 'Sélectionnez une quantité',
+  cart: 'Cart'
 }
