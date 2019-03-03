@@ -104,6 +104,7 @@
 @media screen and (max-width: 800px) {
   .cart {
     width: 100%;
+    padding: 20px;
   }
   .cart-container {
     flex-shrink: 0;
@@ -114,10 +115,12 @@
       padding: 20px;
     }
     .item {
+      
+      background-color: hsla(0, 0%, 100%, 0.8);
       align-items: center;
       text-align: center;
       flex-direction: column;
-      padding-bottom: 10px;
+      padding: 10px 0;
       margin-bottom: 10px;
       .pic {
         margin-right: 0;

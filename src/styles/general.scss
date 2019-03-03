@@ -51,6 +51,7 @@ body, html {
   position: relative;
   border-radius: 15px;
   background: white;
+  flex-shrink: 0;
   width: 30px;
   height: 30px;
   i {
@@ -59,13 +60,14 @@ body, html {
   }
   span {
     @include center;
+    display: flex !important;
     position: absolute;
     top: -9px;
     right: -5px;
     height: 18px;
     width: 18px;
     border-radius: 9px;
-    background-color: red;
+    background-color: $primary;
     color: white;
 
   }
@@ -90,9 +92,22 @@ body, html {
 }
 
 footer {
-  justify-content: flex-end;
+  justify-content: center;
   bottom: 0;
   left: 0;
+  .footer-container {
+    align-items: center;
+    justify-content: center;
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    & > div {
+      height: 30px;
+      width: 2px;
+      margin: 0 10px 0 20px;
+      background-color: $gray50;
+    }
+  }
   img {
     width: 30px;
     height: 30px;
@@ -103,17 +118,13 @@ footer {
   i {
     margin-right: 10px;
   }
-  div {
-    height: 30px;
-    width: 2px;
-    margin: 0 10px 0 20px;
-    background-color: $gray50;
-  }
+  
   a {
     display: flex;
   }
   .select {
     background: none;
+    width: 40px;
     border: 1px solid $gray50;
     color: $gray50;
     &:hover {
@@ -146,8 +157,26 @@ footer {
 }
 @media screen and (max-width: 760px) {
   #top-nav {
+    padding: 0;
+    & > div {
+      width: 100%;
+      justify-content: space-evenly;
+    }
+    a {
+      flex-shrink: 0;
+      margin-left: 0;
+    }
+  }
+}
+@media screen and (max-width: 650px) {
+  #top-nav {
     span {
       display: none;
+    }
+    & > div {
+      width: 100%;
+      justify-content: space-evenly;
+      
     }
   }
   footer {

@@ -1,10 +1,12 @@
 import React from 'react'
 import logo from '../images/logo.svg'
+import p from '../images/p.svg'
 import { Link } from 'react-router-dom'
 export const TopNav = (props) => (
   <nav id='top-nav'>
-    <img src={logo} alt='logo' />
+    {window.innerWidth > 760 && <img src={logo} alt='logo' />}
     <div>
+      {window.innerWidth <= 760 && <img src={p} alt='logo' />}
       <Link to='/'>
         <i className='fas fa-home' /><span>{props.global.say.home}</span>
       </Link>
