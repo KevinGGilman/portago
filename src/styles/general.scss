@@ -46,10 +46,38 @@ body, html {
   padding: 0 30px;
   background-color: hsla(0, 0%, 100%, 0.8);
 }
+.cart-icon {
+  @include center;
+  position: relative;
+  border-radius: 15px;
+  background: white;
+  width: 30px;
+  height: 30px;
+  i {
+    position: absolute;
+    right: -3px;
+  }
+  span {
+    @include center;
+    position: absolute;
+    top: -9px;
+    right: -5px;
+    height: 18px;
+    width: 18px;
+    border-radius: 9px;
+    background-color: red;
+    color: white;
+
+  }
+}
 #top-nav {
   justify-content: space-between;
   top: 0;
   left: 0;
+  & > div {
+    display: flex;
+    align-items: center;
+  }
   img {
     height: 30px;
   }

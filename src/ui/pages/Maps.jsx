@@ -63,7 +63,6 @@ export default class Maps extends React.Component {
         searchVal: postalCode
       })
     })
-    console.log('bonjour')
   }
   filter ({ lat: lat1, lng: lng1 }) {
     if (!this.state.searchCoords) return true

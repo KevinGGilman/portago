@@ -48,5 +48,8 @@ export const fr = {
   straw: 'Paille',
   brush: 'Brosse',
   quantityPlaceholder: 'Sélectionnez une quantité',
-  cart: 'Cart'
+  cart: 'Panier',
+  pockets: 'Pochettes',
+  straws: 'Pailles',
+  brushes: 'Brosses'
 }

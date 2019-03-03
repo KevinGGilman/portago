@@ -3,28 +3,9 @@ import { Pic } from '../Pic'
 import { Button } from '../Form'
 import listToMap from '../../actions/listToMap'
 export const OptionList = (props) => {
-  if (!props.isOpen) return null
   const selectedMap = props.selectedList && listToMap(props.selectedList)
-
   return (
     <div className='list'>
-      {props.onBack &&
-      <div className='item' onClick={() => props.onBack()}>
-        <Pic>
-          {props.title && <p>{props.title({
-            en: { name: 'Back' },
-            fr: { name: 'Retour' }
-          })}</p>}
-        </Pic>
-      </div>
-      }
-      {props.onNext &&
-        <div className='item' onClick={() => props.onNext()}>
-          <Pic> {props.title &&
-          <p>{props.title({ en: { name: 'Next' }, fr: { name: 'Suivant' } })}</p>
-          }</Pic>
-        </div>
-      }
       {props.list.map(item => {
         const selectedItem = (selectedMap || {})[item._id]
         const buyCount = selectedItem ? selectedMap[item._id].buyCount : 0
@@ -35,6 +16,7 @@ export const OptionList = (props) => {
             onClick={() => props.onClick(item)}
           >
             <Pic
+              global={props.global}
               image={(item.image || ((item.imageList || [])[0]) || {})}>
               {props.title && <p>{props.title(item)}</p>}
               {props.badge && <span>{props.badge(item)}</span>}

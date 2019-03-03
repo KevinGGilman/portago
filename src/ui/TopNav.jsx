@@ -20,6 +20,17 @@ export const TopNav = (props) => (
       <Link to='/about'>
         <i className='fas fa-info-circle' /><span>{props.global.say.about}</span>
       </Link>
+      {!!getCartLength(props.global) &&
+        <Link to='/store/cart' className='cart-icon'>
+          <i className='fas fa-shopping-cart' /><span>{getCartLength(props.global)}</span>
+        </Link>
+      }
+
     </div>
   </nav>
 )
+function getCartLength (global) {
+  return global.selectedPocketList.length +
+  global.selectedStrawList.length +
+  global.selectedBrushList.length
+}

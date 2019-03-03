@@ -27,6 +27,7 @@ class App extends React.Component {
       user: undefined,
       lang: lang.includes('en') ? 'en' : 'fr',
       say: lang.includes('en') ? en : fr,
+      ...actions.getLocalData(),
       setState: (state, callback) => this.setState(state, callback && callback())
     }
     this.refresh = actions.refreshAllRequests.bind(this)

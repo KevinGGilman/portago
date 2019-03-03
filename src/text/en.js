@@ -49,5 +49,8 @@ export const en = {
   category: 'Pocket categories',
   style: 'Style',
   Quantity: 'Quantity',
-  cart: 'Cart'
+  cart: 'Cart',
+  pockets: 'Pockets',
+  straws: 'Straws',
+  brushes: 'Brushes'
 }

@@ -1,17 +1,13 @@
-export default function getLocalData (keyList, listToMap) {
-  return keyList.reduce((dict, key) => {
-    const stringValue = window.localStorage.getItem(key)
-    if (stringValue) {
-      try {
-        dict[key] = JSON.parse(stringValue)
-        if (key === 'categoryList') dict.categoryMap = listToMap(dict[key])
-      } catch (err) {
-        dict[key] = []
-        if (key === 'categoryList') dict.categoryMap = {}
-      }
-    } else {
-      dict[key] = []
-    }
-    return dict
-  }, {})
+export default function getLocalData () {
+  const data = {
+    selectedPocketList: [],
+    selectedStrawList: [],
+    selectedBrushList: []
+  }
+  Object.keys(data).forEach(key => {
+    const item = window.localStorage.getItem(key)
+    if (!item) return
+    try { data[key] = JSON.parse(item) } catch (err) {}
+  })
+  return data
 }

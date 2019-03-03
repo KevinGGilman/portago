@@ -26,7 +26,7 @@ $gray-t85: hsla(0,0%,95%,0.90);
 $gray-t98: hsla(0,0%,98%,0.90);
 $black-t4: hsla(0,0%,0%,0.4);
 // primary
-$primary: hsl(0, 50%, 55%);
+$primary:   hsl(0, 50%, 55%);
 $primary95: hsl(0, 50%, 98%);
 $primary95: hsl(0, 50%, 95%);
 $primary90: hsl(0, 50%, 90%);
@@ -36,14 +36,16 @@ $primary60: hsl(0, 50%, 60%);
 $primary40: hsl(0, 50%, 40%);
 $primary30: hsl(0, 50%, 30%);
 // secondary
-$secondary: hsl(23, 85%, 55%);
-$secondary95: hsl(23, 85%, 95%);
-$secondary90: hsl(23, 85%, 90%);
-$secondary80: hsl(23, 85%, 80%);
-$secondary70: hsl(23, 85%, 70%);
-$secondary60: hsl(23, 85%, 60%);
-$secondary40: hsl(23, 100%, 40%);
-$secondary30: hsl(23, 100%, 30%);
+$secondary:   hsl(0, 50%, 55%);
+$secondary95: hsl(0, 50%, 98%);
+$secondary95: hsl(0, 50%, 95%);
+$secondary90: hsl(0, 50%, 90%);
+$secondary80: hsl(0, 50%, 80%);
+$secondary70: hsl(0, 50%, 70%);
+$secondary60: hsl(0, 50%, 60%);
+$secondary40: hsl(0, 50%, 40%);
+$secondary30: hsl(0, 50%, 30%);
+
 $error: hsl(0, 85%, 60%);
 $error95: hsl(0, 80%, 95%);
 $error80: hsl(0, 80%, 80%);
