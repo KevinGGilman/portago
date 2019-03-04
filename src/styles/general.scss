@@ -57,7 +57,7 @@ body, html {
   width: 30px;
   height: 30px;
   i {
-    position: absolute;
+    margin-right: 0 !important;
   }
   span {
     @include center;
