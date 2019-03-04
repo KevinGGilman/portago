@@ -21,6 +21,13 @@
     padding: 40px;
     height: calc(100% - 75px);
     overflow: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+    & > * {
+      flex-shrink: 0;
+    }
   }
   h4 {
     font-size: 16px;
@@ -64,6 +71,7 @@
     align-items: center;
     width: 100%;
     height: 50px;
+    border-radius: 0 0 5px 5px;
     & > * {
       margin-left: 20px;
     }
