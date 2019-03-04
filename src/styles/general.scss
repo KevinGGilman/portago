@@ -49,6 +49,7 @@ body, html {
 }
 .cart-icon {
   @include center;
+  @include shadow;
   position: relative;
   border-radius: 15px;
   background: white;
@@ -57,7 +58,6 @@ body, html {
   height: 30px;
   i {
     position: absolute;
-    right: -3px;
   }
   span {
     @include center;

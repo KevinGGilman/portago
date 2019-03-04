@@ -4,6 +4,9 @@
   display: flex;
   width: 100%;
   height: 100%;
+  .button:hover i {
+    background-color: transparent;
+  }
   .location-nav, .store-nav {
     position: fixed;
     top: 60px;
@@ -26,16 +29,27 @@
       .select {
         border-radius: 0 5px 0 0;
         flex-shrink: 0;
+        &:hover {
+          background-color: $primary40;
+          color: white;
+        }
       }
     }
     .button {
       border-radius: 0 0 5px 5px;
       margin: 0 20px 10px 20px;
       background-color: $primary80;
-      color: $primary;
+      color: $primary30;
       flex-shrink: 0;
       i {
+        color: $primary30;
         margin-left: 10px;
+        &:hover {
+          background-color: transparent;
+        }
+      }
+      &:hover {
+        background: $primary70;
       }
     }
     .list {
@@ -139,6 +153,12 @@
       border-radius: 0 !important;
       background-color: $gray90 !important;
       color: $gray30 !important;
+      i {
+        color: $gray30 !important;
+        &:hover {
+          background-color: transparent;
+        }
+      }
     }
   }
 }
