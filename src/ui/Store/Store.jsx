@@ -66,7 +66,7 @@ export default class Store extends React.Component {
           ) &&
             <span className='back' onClick={() => this.redirect(-1)}>
               <i className='far fa-angle-left' />
-              {this.props.global.say.back}
+              {window.innerWidth > 500 && this.props.global.say.back}
             </span>
           }
           <Switch>
@@ -129,7 +129,7 @@ export default class Store extends React.Component {
           </Switch>
           {window.location.pathname !== '/store/cart' &&
             <span className='next' onClick={() => this.redirect(1)}>
-              {this.props.global.say.next}
+              {window.innerWidth > 500 && this.props.global.say.next}
               <i className='far fa-angle-right' />
             </span>
           }

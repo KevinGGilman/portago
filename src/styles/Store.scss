@@ -215,16 +215,19 @@
 
 @media screen and (max-width: 500px) {
   #store {
-    .store-container {
-      flex-direction: column;
-    }
     .list {
-      width: 300px;
       margin: 20px 0 !important;
-      height: calc(100% - 150px);
+      width: calc(100vw - 100px) !important;
     }
     .item {
       margin-right: 0 !important;
+    }
+    .back, .next {
+      padding: 0 !important;
+      width: 40px;
+      i {
+        margin: 0 !important;
+      }
     }
   }
 }
