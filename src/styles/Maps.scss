@@ -29,10 +29,11 @@
       input {
         border-radius: 5px 0 0 0;
         height: 30px;
-        width: 100%;
+        width: calc(100% - 80px);
       }
       .select {
         height: 30px;
+        width: 80px;
         border-radius: 0 5px 0 0;
         flex-shrink: 0;
         &:hover {

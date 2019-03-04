@@ -102,10 +102,7 @@ footer {
     max-width: 800px;
     width: 100%;
     display: flex;
-    a[href*="tel"] {
-      @include center;
-      width: 20px;
-    }
+    
     & > div {
       flex-shrink: 0;
       height: 30px;
@@ -173,6 +170,7 @@ footer {
       margin-left: 0;
     }
   }
+  
 }
 @media screen and (max-width: 650px) {
   #top-nav {
@@ -183,6 +181,10 @@ footer {
       width: 100%;
       justify-content: space-around;
       
+    }
+    a[href*="tel"] {
+      @include center;
+      width: 20px;
     }
   }
   footer {

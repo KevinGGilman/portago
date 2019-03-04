@@ -15,7 +15,7 @@ export const en = {
   iconPlaceholder: 'Enter a "Font Awsome" icon name',
   addressPlaceholder: 'Enter an address',
   textareaPlaceholder: 'Write something...',
-  searchMapPlaceholder: 'Enter an address or a postal code',
+  searchMapPlaceholder: 'Enter an address',
   categoryPlaceholder: 'Select a category',
   countPlaceholder: 'Enter the invetory count',
   frNamePlaceholder: 'Enter a name (french)',

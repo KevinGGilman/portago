@@ -15,7 +15,7 @@ export const fr = {
   iconPlaceholder: 'Entrer un nom d\'icon "Font Awsome"',
   addressPlaceholder: 'Entrer une adresse',
   textareaPlaceholder: 'Écrire quelque chose...',
-  searchMapPlaceholder: 'Entrer une adresse ou un code postal',
+  searchMapPlaceholder: 'Entrer une adresse',
   categoryPlaceholder: 'Choisir une catégorie',
   countPlaceholder: 'Entrer la quantité en inventaire',
   frNamePlaceholder: 'Entrer un nom (français)',
