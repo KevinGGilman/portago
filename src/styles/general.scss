@@ -160,7 +160,7 @@ footer {
     padding: 0;
     & > div {
       width: 100%;
-      justify-content: space-evenly;
+      justify-content: space-around;
     }
     a {
       flex-shrink: 0;
@@ -175,7 +175,7 @@ footer {
     }
     & > div {
       width: 100%;
-      justify-content: space-evenly;
+      justify-content: space-around;
       
     }
   }

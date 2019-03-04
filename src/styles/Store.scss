@@ -85,6 +85,13 @@
     max-width: 800px;
     padding: 30px;
     overflow: auto;
+    &::-webkit-scrollbar{
+      width: 0px;
+      height: 0px;
+    }
+    &::-webkit-scrollbar-track-piece{
+      background-color: transparent;
+    }
     .item {
       @include shadow;
       display: flex;
@@ -158,7 +165,7 @@
   .bottom {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
     height: 40px;
     background-color: hsla(0, 0%, 100%, 0.8); 
     .button {
@@ -171,6 +178,9 @@
 
 @media screen and (max-width: 760px) {
   #store {
+    .step-group {
+      justify-content: space-around;
+    }
     .store-nav {
       max-width: 100vw !important;
       width: 100vw !important;

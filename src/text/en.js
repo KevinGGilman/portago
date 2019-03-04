@@ -52,5 +52,7 @@ export const en = {
   cart: 'Cart',
   pockets: 'Pockets',
   straws: 'Straws',
-  brushes: 'Brushes'
+  brushes: 'Brushes',
+  price: 'Price ',
+  totalPrice: 'Total price : '
 }

@@ -51,5 +51,7 @@ export const fr = {
   cart: 'Panier',
   pockets: 'Pochettes',
   straws: 'Pailles',
-  brushes: 'Brosses'
+  brushes: 'Brosses',
+  price: 'Prix ',
+  totalPrice: 'Prix total : '
 }

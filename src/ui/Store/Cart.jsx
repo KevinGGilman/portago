@@ -31,7 +31,11 @@ export const Cart = (props) => (
         <p>Pay with:</p>
         <span className='paypal'><img src={paypal} /></span>
         <span className='stripe'><img src={stripe} /></span>
-        <p>{`Total price : ${getTotalPrice(props)}$`}</p>
+        <p>
+          {window.innerWidth > 470 && props.global.say.totalPrice}
+          {window.innerWidth < 470 && props.global.say.price}
+          {`${getTotalPrice(props)}$`}
+        </p>
       </div>
     </div>
   </div>
