@@ -1,0 +1,48 @@
+@import '../styles/variables.scss';
+
+#modal {
+  .label {
+    font-size: 15px;
+  }
+  input {
+    background: transparent;
+    font-size: 14px;
+    font-weight: 400;
+    &::placeholder {
+      color: $gray45;
+    }
+  }
+  .label i {
+    width: 30px;
+    color: $primary;
+  }
+  .modal-body {
+    padding: 20px;
+  }
+  .postal-code {
+    width: 150px;
+  }
+  .group-set {
+    padding: 10px;
+    h5 {
+      color: $primary;
+      font-weight: 400;
+    }
+    & > div {
+      padding: 20px;
+    }
+  }
+  .toggle i {
+    font-size: 20px;
+  }
+  .modal-footer {
+    .button {
+      background-color: transparent;
+      border: 1px solid $primary;
+      &:last-child {
+        background-color: $primary;
+        color: white;
+      }
+    }
+  }
+}

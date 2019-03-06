@@ -13,10 +13,11 @@ export const Cart = (props) => (
     <div className='cart-container'>
       <div className='scroll-view'>
         {typeList.map(({ label, list, key }, typeIndex) => (
-          <>
+          <React.Fragment key={typeIndex}>
             {!!props.global[list].length && <h4>{props.global.say[label]}:</h4>}
             {props.global[list].map((item, index) => (
               <Item
+                key={index}
                 global={props.global}
                 item={item}
                 price={props.global.config.cost[key]}
@@ -24,13 +25,23 @@ export const Cart = (props) => (
                 onMinus={() => props.onMinus(item, index, list)}
               />
             ))}
-          </>
+          </React.Fragment>
         ))}
+        <h4>{`${props.global.say.shippingFees} :`}</h4>
+        <div className='item'>
+          <p />
+          <p className='price'>{`${Number(props.global.config.cost.shipping)}$`}</p>
+        </div>
       </div>
       <div className='payments'>
         <p>Pay with:</p>
         <span className='paypal'><img src={paypal} /></span>
-        <span className='stripe'><img src={stripe} /></span>
+        <span
+          onClick={() => props.global.setState({ modal: 'StripeClient' })}
+          className='stripe'
+        >
+          <img src={stripe} />
+        </span>
         <p>
           {window.innerWidth > 470 && props.global.say.totalPrice}
           {window.innerWidth < 470 && props.global.say.price}
@@ -41,12 +52,13 @@ export const Cart = (props) => (
   </div>
 )
 function getTotalPrice (props) {
-  return typeList.reduce((price, { list, key }) => {
+  const listPrice = typeList.reduce((price, { list, key }) => {
     props.global[list].forEach(({ buyCount }) => {
       price += props.global.config.cost[key] * buyCount
     })
     return price
   }, 0)
+  return listPrice + props.global.config.cost.shipping
 }
 const Item = ({ item, type, global, price, onPlus, onMinus }) => (
   <div className='item'>

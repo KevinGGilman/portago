@@ -54,5 +54,20 @@ export const en = {
   straws: 'Straws',
   brushes: 'Brushes',
   price: 'Price ',
-  totalPrice: 'Total price : '
+  totalPrice: 'Total price : ',
+  fullName: 'Full name',
+  fullNamePlaceholder: 'John doe',
+  address: 'Address',
+  longAddressPlaceholder: '1234 example street',
+  postalCodePlaceholder: 'Postal code',
+  region: 'Region',
+  cityPlaceholder: 'City',
+  provincePlaceholder: 'Province',
+  isSameInformations: 'Same as shipping',
+  paymentInfo: 'Payment informations',
+  shippingInfo: 'Shipping informations',
+  billInfo: 'Bill informations',
+  countryPlaceholder: 'Country',
+  email: 'Email',
+  emailPlaceholder: 'example@example.com'
 }

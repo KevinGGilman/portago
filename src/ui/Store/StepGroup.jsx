@@ -2,10 +2,10 @@ import React from 'react'
 
 export const StepGroup = (props) => (
   <div className='step-group'>
-    {props.stepList.map(obj => (
+    {props.stepList.map((obj, index) => (
       <>
         <div
-          key={obj.label}
+          key={index}
           onClick={() => props.global.history.push(obj.path)}
           className={`step-item ${
             obj.path === window.location.pathname ||

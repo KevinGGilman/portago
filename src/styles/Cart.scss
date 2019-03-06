@@ -34,7 +34,10 @@
     font-weight: bold;
     border-bottom: 1px solid $gray70;
     padding-bottom: 5px;
-    margin-bottom: 20px;
+    margin: 30px 0 20px 0;
+    &:first-child {
+      margin: 0 0 20px 0;
+    }
   }
   .item {
     display: flex;
@@ -51,8 +54,9 @@
     }
     
     .pic {
-      width: 75px !important;
-      height: 75px !important;
+      width: 60px !important;
+      height: 60px !important;
+      border-radius: 30px;
     }
   }
   .bottom {

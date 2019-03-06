@@ -6,7 +6,8 @@ export const config = {
   cost: {
     pocket: 10,
     straw: 2,
-    brush: 1
+    brush: 1,
+    shipping: 2
   }
 
 }

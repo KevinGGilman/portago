@@ -484,13 +484,14 @@ input {
   flex-shrink: 0;
   // box-shadow: 0 0 20px $secondary;
   color: white;
-  background: $secondary;
   label {
     background: $secondary30;
     color: white;
   }
 }
-.modal-header{
+.modal-header {
+  color: $primary;
+  border-bottom: 1px solid $primary;
   & > * {
     flex-shrink: 0;
   }
@@ -500,7 +501,8 @@ input {
     flex-shrink: 1;
   }
 }
-.modal-footer{
+.modal-footer {
+  background: hsla(0, 50%, 90%, 0.9);
   justify-content: flex-end;
   .button{
     margin-left: 10px;

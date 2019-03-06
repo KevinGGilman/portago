@@ -826,7 +826,7 @@ export const Fieldset = (props) => {
   if (props.isValidation && isSomeEmptyChildren(props)) className.push('error')
   return (
     <div className={className.join(' ')}>
-      <Label >{props.label}</Label>
+      <Label ><i className={props.faClass} />{`${props.label} :`}</Label>
       <div>
         {props.children}
       </div>
